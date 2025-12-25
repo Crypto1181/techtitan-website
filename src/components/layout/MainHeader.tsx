@@ -123,7 +123,7 @@ const MainHeader = ({ onMenuClick, activeTab, onTabChange }: MainHeaderProps) =>
               )}
             </Button>
 
-            {/* Account dropdown */}
+            {/* Account dropdown - Desktop */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="text-white hover:bg-white/10 hidden md:flex items-center gap-1">
@@ -133,6 +133,21 @@ const MainHeader = ({ onMenuClick, activeTab, onTabChange }: MainHeaderProps) =>
                     <p className="text-sm font-medium">Sign In</p>
                   </div>
                   <ChevronDown className="h-4 w-4 ml-1" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuItem>Sign In</DropdownMenuItem>
+                <DropdownMenuItem>Create Account</DropdownMenuItem>
+                <DropdownMenuItem>My Orders</DropdownMenuItem>
+                <DropdownMenuItem>Wishlist</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {/* Account dropdown - Mobile */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon" className="text-white hover:bg-white/10 md:hidden">
+                  <User className="h-5 w-5" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48">
