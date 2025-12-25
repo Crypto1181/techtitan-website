@@ -39,23 +39,22 @@ const ProductCarousel = ({
         )}
       </div>
 
-      <div className="relative overflow-visible">
-        <div className="overflow-x-auto scrollbar-hide -mx-4 px-4 md:-mx-6 md:px-6">
-          <Carousel
-            opts={{
-              align: 'start',
-              loop: true,
-            }}
-            plugins={autoplay ? [plugin.current] : []}
-            className="w-full"
-          >
-            <CarouselContent className="-ml-2 md:-ml-3 pr-8 md:pr-12">
-              {products.map((product) => (
-                <CarouselItem 
-                  key={product.id} 
-                  className="pl-2 md:pl-3 basis-1/2 md:basis-1/3 lg:basis-1/5"
-                >
-              <div className="product-card group h-full">
+      <div className="relative -mx-4 px-4 md:-mx-6 md:px-6">
+        <Carousel
+          opts={{
+            align: 'start',
+            loop: true,
+          }}
+          plugins={autoplay ? [plugin.current] : []}
+          className="w-full"
+        >
+          <CarouselContent className="-ml-2 md:-ml-3 pr-8 md:pr-12">
+            {products.map((product) => (
+              <CarouselItem 
+                key={product.id} 
+                className="pl-2 md:pl-3 basis-1/2 md:basis-1/3 lg:basis-1/5"
+              >
+                <div className="product-card group h-full">
                 {/* Wishlist button */}
                 <Button
                   variant="ghost"
