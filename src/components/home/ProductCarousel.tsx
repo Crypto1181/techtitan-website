@@ -1,4 +1,4 @@
-import { Star, ShoppingCart, Heart, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ShoppingCart, Heart, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { sampleComponents, PCComponent } from '@/data/pcComponents';
 import {
@@ -79,19 +79,6 @@ const ProductCarousel = ({
                 <h3 className="text-xs md:text-sm font-medium line-clamp-2 mb-2 min-h-[32px] md:min-h-[40px]">
                   {product.name}
                 </h3>
-
-                {/* Rating */}
-                <div className="flex items-center gap-1 mb-2">
-                  <div className="flex items-center">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className={`h-3 w-3 ${i < 4 ? 'fill-amber-400 text-amber-400' : 'text-gray-300'}`}
-                      />
-                    ))}
-                  </div>
-                  <span className="text-xs text-muted-foreground">(24)</span>
-                </div>
 
                 {/* Price */}
                 <div className="flex items-baseline gap-2 mb-2">

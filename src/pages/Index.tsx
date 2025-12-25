@@ -4,6 +4,7 @@ import CategorySidebar from '@/components/layout/CategorySidebar';
 import HeroBanner from '@/components/home/HeroBanner';
 import ProductCarousel from '@/components/home/ProductCarousel';
 import BrandsCarousel from '@/components/home/BrandsCarousel';
+import CustomerReviews from '@/components/home/CustomerReviews';
 import Footer from '@/components/layout/Footer';
 import WhatsAppWidget from '@/components/WhatsAppWidget';
 import FlipbookCatalog from '@/components/FlipbookCatalog';
@@ -138,6 +139,7 @@ const Index = () => {
 
               <BrandsCarousel />
               <FlipbookCatalog />
+              <CustomerReviews />
             </>
           )}
 
