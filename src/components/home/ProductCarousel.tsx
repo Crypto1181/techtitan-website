@@ -105,8 +105,8 @@ const ProductCarousel = ({
                   <ShoppingCart className="h-3 w-3 mr-1" />
                   Add to Cart
                 </Button>
-              </div>
-            </CarouselItem>
+                </div>
+              </CarouselItem>
             ))}
           </CarouselContent>
           <div className="hidden md:flex items-center justify-center gap-4 mt-4">
