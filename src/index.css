@@ -1,0 +1,253 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto:wght@400;500;700&display=swap');
+
+@layer base {
+  :root {
+    /* TechTitan Newegg-Style Theme */
+    --background: 210 20% 98%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    /* Newegg Blue Primary */
+    --primary: 213 100% 29%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Light gray secondary */
+    --secondary: 210 20% 96%;
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 210 20% 94%;
+    --muted-foreground: 215 16% 47%;
+
+    /* Newegg Orange Accent */
+    --accent: 24 100% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 213 100% 29%;
+
+    --radius: 0.5rem;
+
+    /* Custom Newegg tokens */
+    --header-bg: 213 100% 18%;
+    --header-foreground: 0 0% 100%;
+    --nav-bg: 210 20% 98%;
+    --deal-red: 0 84% 50%;
+    --success: 142 76% 36%;
+    --info-bar: 210 40% 96%;
+
+    /* Sidebar */
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 222 47% 11%;
+    --sidebar-primary: 213 100% 29%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 210 20% 96%;
+    --sidebar-accent-foreground: 222 47% 11%;
+    --sidebar-border: 214 32% 91%;
+    --sidebar-ring: 213 100% 29%;
+  }
+
+  .dark {
+    --background: 222 47% 6%;
+    --foreground: 210 40% 96%;
+
+    --card: 222 47% 9%;
+    --card-foreground: 210 40% 96%;
+
+    --popover: 222 47% 8%;
+    --popover-foreground: 210 40% 96%;
+
+    --primary: 213 100% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 222 47% 14%;
+    --secondary-foreground: 210 40% 96%;
+
+    --muted: 222 30% 18%;
+    --muted-foreground: 215 20% 55%;
+
+    --accent: 24 100% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 222 30% 18%;
+    --input: 222 30% 18%;
+    --ring: 213 100% 50%;
+
+    --header-bg: 222 47% 8%;
+    --header-foreground: 210 40% 96%;
+    --nav-bg: 222 47% 11%;
+
+    --sidebar-background: 222 47% 8%;
+    --sidebar-foreground: 210 40% 96%;
+    --sidebar-primary: 213 100% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 222 47% 14%;
+    --sidebar-accent-foreground: 210 40% 96%;
+    --sidebar-border: 222 30% 18%;
+    --sidebar-ring: 213 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Roboto', system-ui, sans-serif;
+    @apply font-bold tracking-tight;
+  }
+}
+
+@layer components {
+  /* Header styles */
+  .header-main {
+    @apply bg-[hsl(var(--header-bg))] text-[hsl(var(--header-foreground))];
+  }
+
+  /* Category card with discount */
+  .category-deal-card {
+    @apply bg-card rounded-lg border border-border overflow-hidden transition-all duration-200 hover:shadow-lg hover:border-primary/30;
+  }
+
+  /* Product card */
+  .product-card {
+    @apply bg-card rounded-lg border border-border p-4 transition-all duration-200 hover:shadow-lg hover:border-primary/30;
+  }
+
+  /* Price styling */
+  .price-main {
+    @apply text-2xl font-bold text-foreground;
+  }
+
+  .price-original {
+    @apply text-sm text-muted-foreground line-through;
+  }
+
+  .price-sale {
+    @apply text-accent font-bold;
+  }
+
+  /* Discount badge */
+  .discount-badge {
+    @apply bg-accent text-accent-foreground px-2 py-1 rounded text-xs font-bold;
+  }
+
+  /* Info bar */
+  .info-bar {
+    @apply bg-[hsl(var(--info-bar))] border-b border-border py-2 text-sm;
+  }
+
+  /* Navigation link */
+  .nav-link {
+    @apply text-sm font-medium text-muted-foreground hover:text-primary transition-colors;
+  }
+
+  .nav-link-active {
+    @apply text-primary font-semibold;
+  }
+
+  /* Sidebar category item */
+  .sidebar-category {
+    @apply flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-secondary cursor-pointer transition-colors;
+  }
+
+  /* Search bar */
+  .search-bar {
+    @apply flex items-center bg-white border border-border rounded-md overflow-hidden;
+  }
+
+  .search-bar input {
+    @apply flex-1 px-4 py-2 text-sm text-foreground bg-transparent outline-none;
+  }
+
+  .search-bar button {
+    @apply bg-accent hover:bg-accent/90 text-accent-foreground px-4 py-2 transition-colors;
+  }
+
+  /* Deal card with percentage */
+  .deal-percentage {
+    @apply text-4xl font-bold text-primary;
+  }
+
+  /* Cart badge */
+  .cart-badge {
+    @apply absolute -top-2 -right-2 bg-accent text-accent-foreground text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold;
+  }
+
+  /* Hero banner */
+  .hero-banner {
+    @apply relative rounded-lg overflow-hidden;
+  }
+
+  /* Promo card */
+  .promo-card {
+    @apply bg-gradient-to-r from-primary to-primary/80 text-primary-foreground rounded-lg p-6;
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fade-in 0.3s ease-out forwards;
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-slide-in {
+    animation: slide-in 0.3s ease-out forwards;
+  }
+
+  @keyframes slide-in {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* Scrollbar styling */
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    @apply bg-secondary rounded;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground/30 rounded hover:bg-muted-foreground/50;
+  }
+}
