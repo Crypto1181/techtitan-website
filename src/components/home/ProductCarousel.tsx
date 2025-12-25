@@ -39,20 +39,22 @@ const ProductCarousel = ({
         )}
       </div>
 
-      <Carousel
-        opts={{
-          align: 'start',
-          loop: true,
-        }}
-        plugins={autoplay ? [plugin.current] : []}
-        className="w-full"
-      >
-        <CarouselContent className="-ml-2 md:-ml-3">
-          {products.map((product) => (
-            <CarouselItem 
-              key={product.id} 
-              className="pl-2 md:pl-3 basis-1/2 md:basis-1/3 lg:basis-1/5"
-            >
+      <div className="relative overflow-visible">
+        <div className="overflow-x-auto scrollbar-hide -mx-4 px-4 md:-mx-6 md:px-6">
+          <Carousel
+            opts={{
+              align: 'start',
+              loop: true,
+            }}
+            plugins={autoplay ? [plugin.current] : []}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-2 md:-ml-3 pr-8 md:pr-12">
+              {products.map((product) => (
+                <CarouselItem 
+                  key={product.id} 
+                  className="pl-2 md:pl-3 basis-1/2 md:basis-1/3 lg:basis-1/5"
+                >
               <div className="product-card group h-full">
                 {/* Wishlist button */}
                 <Button
@@ -106,13 +108,16 @@ const ProductCarousel = ({
                 </Button>
               </div>
             </CarouselItem>
-          ))}
-        </CarouselContent>
-        <div className="hidden md:flex items-center justify-center gap-4 mt-4">
-          <CarouselPrevious className="static translate-y-0 bg-background/80 hover:bg-background border-primary/20" />
-          <CarouselNext className="static translate-y-0 bg-background/80 hover:bg-background border-primary/20" />
-        </div>
-      </Carousel>
+              ))}
+            </CarouselContent>
+            <div className="hidden md:flex items-center justify-center gap-4 mt-4">
+              <CarouselPrevious className="static translate-y-0 bg-background/80 hover:bg-background border-primary/20" />
+              <CarouselNext className="static translate-y-0 bg-background/80 hover:bg-background border-primary/20" />
+            </div>
+          </Carousel>
+        {/* Gradient fade on right side to indicate more items - visible on mobile */}
+        <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-background to-transparent pointer-events-none z-10 md:hidden" />
+      </div>
     </section>
   );
 };
