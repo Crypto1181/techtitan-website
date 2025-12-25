@@ -174,15 +174,15 @@
 
   /* Search bar */
   .search-bar {
-    @apply flex items-center bg-white border border-border rounded-md overflow-hidden;
+    @apply flex items-center bg-white dark:bg-card border border-border rounded-md overflow-hidden;
   }
 
   .search-bar input {
-    @apply flex-1 px-4 py-2 text-sm text-foreground bg-transparent outline-none;
+    @apply flex-1 px-4 py-2 text-sm text-foreground dark:text-foreground bg-transparent outline-none placeholder:text-muted-foreground;
   }
 
   .search-bar button {
-    @apply bg-accent hover:bg-accent/90 text-accent-foreground px-4 py-2 transition-colors;
+    @apply bg-accent hover:bg-accent/90 text-accent-foreground px-4 py-2 transition-colors flex-shrink-0;
   }
 
   /* Deal card with percentage */

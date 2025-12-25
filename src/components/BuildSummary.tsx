@@ -88,6 +88,9 @@ const BuildSummary = ({ selectedComponents, onRemoveComponent }: BuildSummaryPro
         <p className="text-xs text-muted-foreground mt-1">
           *Prices may vary. Cash on delivery.
         </p>
+        <p className="text-xs text-muted-foreground mt-2 p-2 bg-muted/50 rounded border border-border">
+          <strong>Shipping Note:</strong> Standard shipping is $3 for small items. Large-volume items (gaming chairs, desks, etc.) are not included in the flat rate. Please contact us at checkout for a shipping quote based on your location.
+        </p>
       </div>
 
       {/* Actions */}

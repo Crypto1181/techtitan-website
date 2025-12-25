@@ -53,9 +53,13 @@ const BrandsCarousel = () => {
                     src={brand.logo}
                     alt={brand.name}
                     className="max-h-full max-w-full object-contain"
+                    loading="lazy"
                     onError={(e) => {
-                      e.currentTarget.style.display = 'none';
-                      e.currentTarget.parentElement!.innerHTML = `<span class="text-sm font-bold text-muted-foreground">${brand.name}</span>`;
+                      const target = e.currentTarget;
+                      const parent = target.parentElement;
+                      if (parent) {
+                        parent.innerHTML = `<div class="text-xs md:text-sm font-bold text-primary flex items-center justify-center h-full">${brand.name}</div>`;
+                      }
                     }}
                   />
                 </div>

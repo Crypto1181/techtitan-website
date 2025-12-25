@@ -27,7 +27,6 @@ const Footer = ({ onTabChange }: FooterProps) => {
               <li><a href="#" className="hover:text-primary">FAQ</a></li>
               <li><a href="#" className="hover:text-primary">Shipping Info</a></li>
               <li><a href="#" className="hover:text-primary">Returns</a></li>
-              <li><a href="#" className="hover:text-primary">Track Order</a></li>
             </ul>
           </div>
 
@@ -152,7 +151,7 @@ const Footer = ({ onTabChange }: FooterProps) => {
             </div>
           </div>
           <p className="text-sm text-muted-foreground text-center">
-            © 2024 TechTitan. All rights reserved. Cash on Delivery available in Lebanon.
+            © 2026 TechTitan. All rights reserved. Cash on Delivery available in Lebanon.
           </p>
         </div>
       </div>

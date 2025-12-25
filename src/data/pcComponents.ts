@@ -6,7 +6,10 @@ export type ComponentCategory =
   | 'storage'
   | 'psu'
   | 'case'
-  | 'cooler';
+  | 'cooler'
+  | 'mouse'
+  | 'keyboard'
+  | 'headset';
 
 export interface PCComponent {
   id: string;
@@ -41,6 +44,9 @@ export const categories: CategoryInfo[] = [
   { id: 'psu', name: 'Power Supply', icon: '⚡', description: 'PSU' },
   { id: 'cooler', name: 'CPU Cooler', icon: '❄️', description: 'Cooling' },
   { id: 'case', name: 'Case', icon: '🖥️', description: 'Chassis' },
+  { id: 'mouse', name: 'Mouse', icon: '🖱️', description: 'Gaming Mouse' },
+  { id: 'keyboard', name: 'Keyboard', icon: '⌨️', description: 'Gaming Keyboard' },
+  { id: 'headset', name: 'Headset', icon: '🎧', description: 'Gaming Headset' },
 ];
 
 export const sampleComponents: PCComponent[] = [
@@ -267,6 +273,78 @@ export const sampleComponents: PCComponent[] = [
     specs: { formFactor: 'Mid Tower', material: 'Steel/Glass', gpuClearance: '400mm' },
     inStock: true,
     compatibility: { formFactor: 'ATX' }
+  },
+
+  // Mouse
+  {
+    id: 'mouse-1',
+    name: 'Razer DeathAdder V3 Pro',
+    brand: 'Razer',
+    category: 'mouse',
+    price: 149.99,
+    image: '/placeholder.svg',
+    specs: { dpi: '30000', sensor: 'Focus Pro 30K', wireless: 'Yes', battery: '90 hours' },
+    inStock: true,
+    compatibility: {}
+  },
+  {
+    id: 'mouse-2',
+    name: 'Logitech G Pro X Superlight 2',
+    brand: 'Logitech',
+    category: 'mouse',
+    price: 159.99,
+    image: '/placeholder.svg',
+    specs: { dpi: '32000', sensor: 'Hero 2', wireless: 'Yes', weight: '60g' },
+    inStock: true,
+    compatibility: {}
+  },
+
+  // Keyboard
+  {
+    id: 'keyboard-1',
+    name: 'Corsair K70 RGB TKL',
+    brand: 'Corsair',
+    category: 'keyboard',
+    price: 149.99,
+    image: '/placeholder.svg',
+    specs: { switches: 'Cherry MX Red', layout: 'TKL', rgb: 'Yes', connectivity: 'USB' },
+    inStock: true,
+    compatibility: {}
+  },
+  {
+    id: 'keyboard-2',
+    name: 'Razer BlackWidow V4 Pro',
+    brand: 'Razer',
+    category: 'keyboard',
+    price: 229.99,
+    image: '/placeholder.svg',
+    specs: { switches: 'Razer Green', layout: 'Full', rgb: 'Yes', connectivity: 'USB/Wireless' },
+    inStock: true,
+    compatibility: {}
+  },
+
+  // Headset
+  {
+    id: 'headset-1',
+    name: 'SteelSeries Arctis Nova Pro',
+    brand: 'SteelSeries',
+    category: 'headset',
+    price: 349.99,
+    image: '/placeholder.svg',
+    specs: { drivers: '40mm', frequency: '10-40000 Hz', microphone: 'Retractable', wireless: 'Yes' },
+    inStock: true,
+    compatibility: {}
+  },
+  {
+    id: 'headset-2',
+    name: 'HyperX Cloud Alpha Wireless',
+    brand: 'HyperX',
+    category: 'headset',
+    price: 199.99,
+    image: '/placeholder.svg',
+    specs: { drivers: '50mm', frequency: '15-25000 Hz', microphone: 'Detachable', battery: '300 hours' },
+    inStock: true,
+    compatibility: {}
   },
 ];
 

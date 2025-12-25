@@ -2,14 +2,12 @@ import { useState } from 'react';
 import MainHeader from '@/components/layout/MainHeader';
 import CategorySidebar from '@/components/layout/CategorySidebar';
 import HeroBanner from '@/components/home/HeroBanner';
-import DealCards from '@/components/home/DealCards';
 import ProductCarousel from '@/components/home/ProductCarousel';
 import BrandsCarousel from '@/components/home/BrandsCarousel';
-import CustomerReviews from '@/components/home/CustomerReviews';
-import ContactBar from '@/components/home/ContactBar';
 import Footer from '@/components/layout/Footer';
 import WhatsAppWidget from '@/components/WhatsAppWidget';
 import FlipbookCatalog from '@/components/FlipbookCatalog';
+import BackToTop from '@/components/BackToTop';
 import BuildSummary from '@/components/BuildSummary';
 import ComponentSelector from '@/components/ComponentSelector';
 import PCFinder from '@/components/PCFinder';
@@ -88,11 +86,7 @@ const Index = () => {
               <div className="p-4 lg:p-6 space-y-6">
                 <HeroBanner onCtaClick={handleBannerClick} />
 
-                <section>
-                  <h2 className="text-xl font-bold mb-4">Today's Top Deals</h2>
-                  <DealCards onCategoryClick={(categoryId) => console.log('Deal:', categoryId)} />
-                </section>
-
+                <ProductCarousel title="New Arrivals" products={sampleComponents.slice(2, 12)} />
                 <ProductCarousel title="Featured Products" products={sampleComponents.slice(0, 10)} />
                 <ProductCarousel title="Best Sellers" products={sampleComponents.slice(5, 15)} />
 
@@ -140,13 +134,10 @@ const Index = () => {
                   </div>
                 </section>
 
-                <ProductCarousel title="New Arrivals" products={sampleComponents.slice(2, 12)} />
               </div>
 
               <BrandsCarousel />
               <FlipbookCatalog />
-              <CustomerReviews />
-              <ContactBar />
             </>
           )}
 
@@ -209,6 +200,7 @@ const Index = () => {
 
       <Footer onTabChange={handleTabChange} />
       <WhatsAppWidget />
+      <BackToTop />
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { popularGames, preBuilds, sampleComponents, PCComponent } from '@/data/pcComponents';
-import { Gamepad2, Monitor, Zap, ArrowRight, Check, ChevronLeft, Cpu, CircuitBoard, HardDrive } from 'lucide-react';
+import { Gamepad2, Monitor, Laptop, Zap, ArrowRight, Check, ChevronLeft, Cpu, CircuitBoard, HardDrive } from 'lucide-react';
 
 interface PCFinderProps {
   onSelectBuild: (components: Record<string, PCComponent | null>) => void;
@@ -126,9 +126,7 @@ const PCFinder = ({ onSelectBuild }: PCFinderProps) => {
                   : 'border-border hover:border-primary/50'
               }`}
             >
-              <div className="h-12 w-12 md:h-16 md:w-16 mx-auto mb-3 text-primary flex items-center justify-center">
-                <Monitor className="h-10 w-10 md:h-14 md:w-14 -rotate-90" />
-              </div>
+              <Laptop className="h-12 w-12 md:h-16 md:w-16 mx-auto mb-3 text-primary" />
               <h3 className="font-bold text-lg md:text-xl">Laptop</h3>
               <p className="text-xs md:text-sm text-muted-foreground mt-1">Portable gaming</p>
             </button>
