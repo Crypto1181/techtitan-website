@@ -9,13 +9,22 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
+// Get base path for GitHub Pages
+const getBasename = () => {
+  // Check if we're on GitHub Pages (production)
+  if (import.meta.env.PROD && window.location.hostname.includes('github.io')) {
+    return '/techtitan-website';
+  }
+  return '/';
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider defaultTheme="light" storageKey="techtitan-ui-theme">
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter>
+        <BrowserRouter basename={getBasename()}>
           <Routes>
             <Route path="/" element={<Index />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
