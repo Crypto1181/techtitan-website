@@ -351,6 +351,43 @@ const Products = () => {
       console.log(`✓ Found WooCommerce category IDs [${categoryIds.join(', ')}] for: "${effectiveCategoryParam}" (mapped to: ${uniqueSlugs.join(', ') || 'direct lookup'})`);
     }
 
+    // FALLBACK: If no category IDs found but we have a known category, use hardcoded ID
+    // This ensures graphic-cards always works even if category lookup fails
+    if (categoryIds.length === 0 && effectiveCategoryParam) {
+      const knownCategoryIds: Record<string, number> = {
+        'graphic-cards': 118,
+        'graphic-card': 118,
+        'gpu': 118,
+        'gpus': 118,
+        'graphics-card': 118,
+        'graphics-cards': 118,
+        'video-card': 118,
+        'video-cards': 118,
+        'cpu': 117,
+        'processors': 117,
+        'processor': 117,
+        'motherboards': 116,
+        'motherboard': 116,
+        'ram': 110,
+        'memory': 110,
+        'storage-drives': 113,
+        'storage': 113,
+        'cases': 119,
+        'case': 119,
+        'coolers-fans': 114,
+        'cooler': 114,
+        'headsets': 121,
+        'keyboards': 127,
+        'mouse': 130,
+      };
+      
+      const normalizedParam = effectiveCategoryParam.toLowerCase().trim();
+      if (knownCategoryIds[normalizedParam]) {
+        console.log(`⚠️ Using fallback category ID ${knownCategoryIds[normalizedParam]} for "${effectiveCategoryParam}" (category lookup returned no IDs)`);
+        return [knownCategoryIds[normalizedParam]];
+      }
+    }
+
     return categoryIds.length > 0 ? categoryIds : undefined;
   }, [categoryParam, searchCategoryMatch, getCategoryIdBySlug, loadingCategories, categories, categorySlugMap]);
 
@@ -490,6 +527,22 @@ const Products = () => {
   const isLaptopAccessoriesCooler = wooCommerceCategoryIds && wooCommerceCategoryIds.includes(11790);
   const shouldFetchAll = isSearching || isLaptopAccessoriesCooler; // Fetch all when searching or viewing laptop accessories cooler
   
+  // Debug logging for category filtering
+  useEffect(() => {
+    if (categoryParam === 'graphic-cards' || categoryParam === 'gpu') {
+      console.log('🔍 Graphics Cards Debug:', {
+        categoryParam,
+        wooCommerceCategoryIds,
+        primaryCategoryId,
+        internalCategoryFilter,
+        isBagsFallback,
+        searchTerm,
+        loadingCategories,
+        categoriesCount: categories.length
+      });
+    }
+  }, [categoryParam, wooCommerceCategoryIds, primaryCategoryId, internalCategoryFilter, isBagsFallback, searchTerm, loadingCategories, categories.length]);
+
   const { products: allProducts, loading, error, totalProducts } = useWooCommerceProducts({
     per_page: (isSearching || isBagsFallback || isLaptopAccessoriesCooler) ? 100 : 24, // Fetch in batches of 100 when searching, bags fallback, or laptop accessories cooler
     page: (isSearching || isBagsFallback || isLaptopAccessoriesCooler) ? 1 : page, // Always start at page 1 when searching, bags fallback, or laptop accessories cooler
