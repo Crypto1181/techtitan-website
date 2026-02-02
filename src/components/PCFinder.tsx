@@ -1,19 +1,21 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { popularGames, preBuilds, sampleComponents, PCComponent } from '@/data/pcComponents';
-import { Gamepad2, Monitor, Laptop, Zap, ArrowRight, Check, ChevronLeft, Cpu, CircuitBoard, HardDrive } from 'lucide-react';
+import { useWooCommerceProducts } from '@/hooks/useWooCommerceProducts';
+import { useWooCommerceCategories } from '@/hooks/useWooCommerceCategories';
+import { categorySlugMap } from '@/data/woocommerce-categories';
+import { Gamepad2, Monitor, Zap, ArrowRight, Check, ChevronLeft, Cpu, CircuitBoard, HardDrive } from 'lucide-react';
 
 interface PCFinderProps {
   onSelectBuild: (components: Record<string, PCComponent | null>) => void;
 }
 
 type Resolution = '1080p' | '1440p' | '4k';
-type DeviceType = 'desktop' | 'laptop';
-type Step = 'device' | 'games' | 'resolution' | 'results';
+type Step = 'games' | 'resolution' | 'results';
 
 const PCFinder = ({ onSelectBuild }: PCFinderProps) => {
-  const [step, setStep] = useState<Step>('device');
-  const [deviceType, setDeviceType] = useState<DeviceType>('desktop');
+  const [step, setStep] = useState<Step>('games');
+  const deviceType = 'desktop'; // Always desktop for PC Finder
   const [selectedGames, setSelectedGames] = useState<string[]>([]);
   const [selectedResolution, setSelectedResolution] = useState<Resolution | null>(null);
 
@@ -27,18 +29,141 @@ const PCFinder = ({ onSelectBuild }: PCFinderProps) => {
     );
   };
 
+  // Fetch WooCommerce categories to map internal categories to WooCommerce category IDs
+  const { getCategoryIdBySlug } = useWooCommerceCategories();
+
+  // Map internal category to WooCommerce category slugs
+  const internalToWooCommerceMap: Record<string, string[]> = {
+    'cpu': ['cpu'],
+    'gpu': ['graphic-cards'],
+    'motherboard': ['motherboards'],
+    'ram': ['ram', 'desktop-ram', 'notebook-ram'],
+    'storage': ['storage-drives', 'internal-storage', 'external-storage'],
+    'psu': ['backup-power'],
+    'case': ['cases'],
+    'cooler': ['coolers-fans', 'cooler'],
+  };
+
+  // Get WooCommerce category IDs for each internal category
+  const getCategoryIds = (internalCategory: string): number[] => {
+    const slugs = internalToWooCommerceMap[internalCategory] || [];
+    const categoryIds: number[] = [];
+    
+    for (const slug of slugs) {
+      const directSlugs = categorySlugMap[slug] || [slug];
+      for (const wcSlug of directSlugs) {
+        const id = getCategoryIdBySlug(wcSlug);
+        if (id && !categoryIds.includes(id)) {
+          categoryIds.push(id);
+        }
+      }
+    }
+    
+    return categoryIds;
+  };
+
+  // Fetch products for each category separately to ensure we get all products
+  // Use category filter for GPU to get graphics cards specifically
+  const gpuCategoryIds = useMemo(() => {
+    const ids = getCategoryIds('gpu');
+    // Fallback to ID 118 if lookup fails
+    return ids.length > 0 ? ids : [118];
+  }, [getCategoryIdBySlug]);
+  
+  const { products: allProducts } = useWooCommerceProducts({
+    fetchAll: true, // Fetch all products for PC Finder
+    // For GPU, filter by category ID to get graphics cards
+    category: gpuCategoryIds.length > 0 ? gpuCategoryIds : undefined,
+  });
+
+  // Combine WooCommerce products with sample data
+  const allComponents = useMemo(() => {
+    const combined = [...(allProducts || [])];
+    sampleComponents.forEach(sample => {
+      if (!combined.find(p => p.id === sample.id)) {
+        combined.push(sample);
+      }
+    });
+    return combined;
+  }, [allProducts]);
+
   const getRecommendedBuild = (tier: 'budget' | 'mainstream' | 'enthusiast') => {
     const build = preBuilds[tier];
     const components: Record<string, PCComponent | null> = {};
     
-    build.components.forEach((compId) => {
-      const component = sampleComponents.find((c) => c.id === compId);
-      if (component) {
-        components[component.category] = component;
-      }
-    });
+    // Get products by category from real inventory
+    const cpuProducts = allComponents.filter(c => c.category === 'cpu' && c.inStock).sort((a, b) => a.price - b.price);
+    const gpuProducts = allComponents.filter(c => c.category === 'gpu' && c.inStock).sort((a, b) => a.price - b.price);
+    const mbProducts = allComponents.filter(c => c.category === 'motherboard' && c.inStock).sort((a, b) => a.price - b.price);
+    const ramProducts = allComponents.filter(c => c.category === 'ram' && c.inStock).sort((a, b) => a.price - b.price);
+    const storageProducts = allComponents.filter(c => c.category === 'storage' && c.inStock).sort((a, b) => a.price - b.price);
+    const psuProducts = allComponents.filter(c => c.category === 'psu' && c.inStock).sort((a, b) => a.price - b.price);
+    const coolerProducts = allComponents.filter(c => c.category === 'cooler' && c.inStock).sort((a, b) => a.price - b.price);
+    const caseProducts = allComponents.filter(c => c.category === 'case' && c.inStock).sort((a, b) => a.price - b.price);
 
-    return { ...build, components };
+    // Select products based on tier
+    if (tier === 'budget') {
+      components.cpu = cpuProducts[0] || null;
+      components.gpu = gpuProducts[0] || null;
+      components.motherboard = mbProducts[0] || null;
+      components.ram = ramProducts[0] || null;
+      components.storage = storageProducts[0] || null;
+      components.psu = psuProducts[0] || null;
+      components.cooler = coolerProducts[0] || null;
+      components.case = caseProducts[0] || null;
+    } else if (tier === 'mainstream') {
+      const midIndex = (arr: PCComponent[]) => Math.floor(arr.length / 2);
+      components.cpu = cpuProducts[midIndex(cpuProducts)] || cpuProducts[0] || null;
+      components.gpu = gpuProducts[midIndex(gpuProducts)] || gpuProducts[0] || null;
+      components.motherboard = mbProducts[midIndex(mbProducts)] || mbProducts[0] || null;
+      components.ram = ramProducts[midIndex(ramProducts)] || ramProducts[0] || null;
+      components.storage = storageProducts[midIndex(storageProducts)] || storageProducts[0] || null;
+      components.psu = psuProducts[midIndex(psuProducts)] || psuProducts[0] || null;
+      components.cooler = coolerProducts[midIndex(coolerProducts)] || coolerProducts[0] || null;
+      components.case = caseProducts[midIndex(caseProducts)] || caseProducts[0] || null;
+    } else {
+      // Enthusiast - get higher-end products
+      components.cpu = cpuProducts[cpuProducts.length - 1] || cpuProducts[0] || null;
+      components.gpu = gpuProducts[gpuProducts.length - 1] || gpuProducts[0] || null;
+      components.motherboard = mbProducts[mbProducts.length - 1] || mbProducts[0] || null;
+      components.ram = ramProducts[ramProducts.length - 1] || ramProducts[0] || null;
+      components.storage = storageProducts[storageProducts.length - 1] || storageProducts[0] || null;
+      components.psu = psuProducts[psuProducts.length - 1] || psuProducts[0] || null;
+      components.cooler = coolerProducts[coolerProducts.length - 1] || coolerProducts[0] || null;
+      components.case = caseProducts[caseProducts.length - 1] || caseProducts[0] || null;
+    }
+
+    // Check compatibility and fix socket mismatches
+    if (components.cpu && components.motherboard) {
+      const cpuSocket = components.cpu.compatibility.socket;
+      const mbSocket = components.motherboard.compatibility.socket;
+      
+      if (cpuSocket && mbSocket && cpuSocket !== mbSocket) {
+        // Find compatible motherboard
+        const compatibleMB = mbProducts.find(mb => mb.compatibility.socket === cpuSocket);
+        if (compatibleMB) {
+          components.motherboard = compatibleMB;
+        } else {
+          // Or find compatible CPU
+          const compatibleCPU = cpuProducts.find(cpu => cpu.compatibility.socket === mbSocket);
+          if (compatibleCPU) {
+            components.cpu = compatibleCPU;
+          }
+        }
+      }
+    }
+
+    // Calculate total price
+    const totalPrice = Object.values(components).reduce((sum, comp) => sum + (comp?.price || 0), 0);
+    const priceRange = tier === 'budget' ? `$${Math.round(totalPrice * 0.8)} - $${Math.round(totalPrice * 1.2)}` :
+                      tier === 'mainstream' ? `$${Math.round(totalPrice * 0.9)} - $${Math.round(totalPrice * 1.1)}` :
+                      `$${Math.round(totalPrice)}+`;
+
+    return { 
+      ...build, 
+      components,
+      priceRange 
+    };
   };
 
   const handleSelectBuild = (tier: 'budget' | 'mainstream' | 'enthusiast') => {
@@ -52,8 +177,8 @@ const PCFinder = ({ onSelectBuild }: PCFinderProps) => {
     { id: '4k' as Resolution, name: '4K', subtitle: 'Ultra HD', description: 'Maximum fidelity', color: 'from-purple-500 to-pink-600' },
   ];
 
-  const stepLabels = ['Device', 'Games', 'Resolution', 'Results'];
-  const currentStepIndex = ['device', 'games', 'resolution', 'results'].indexOf(step);
+  const stepLabels = ['Games', 'Resolution', 'Results'];
+  const currentStepIndex = ['games', 'resolution', 'results'].indexOf(step);
 
   return (
     <div className="max-w-5xl mx-auto">
@@ -86,7 +211,7 @@ const PCFinder = ({ onSelectBuild }: PCFinderProps) => {
               </div>
               <span className="text-[10px] md:text-xs mt-1 text-muted-foreground">{label}</span>
             </div>
-            {index < 3 && (
+            {index < 2 && (
               <div
                 className={`w-8 md:w-16 h-1 mx-1 rounded-full ${
                   index < currentStepIndex ? 'bg-accent' : 'bg-secondary'
@@ -97,66 +222,9 @@ const PCFinder = ({ onSelectBuild }: PCFinderProps) => {
         ))}
       </div>
 
-      {/* Step 0: Device Type */}
-      {step === 'device' && (
-        <div className="animate-fade-in">
-          <div className="text-center mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold mb-2">Select which games you enjoy playing</h2>
-            <p className="text-muted-foreground">Select up to 4 games</p>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4 md:gap-6 max-w-2xl mx-auto mb-8">
-            <button
-              onClick={() => setDeviceType('desktop')}
-              className={`p-6 md:p-8 rounded-xl border-2 transition-all text-center ${
-                deviceType === 'desktop' 
-                  ? 'border-accent bg-accent/10 shadow-lg' 
-                  : 'border-border hover:border-primary/50'
-              }`}
-            >
-              <Monitor className="h-12 w-12 md:h-16 md:w-16 mx-auto mb-3 text-primary" />
-              <h3 className="font-bold text-lg md:text-xl">Desktop</h3>
-              <p className="text-xs md:text-sm text-muted-foreground mt-1">Build a custom PC</p>
-            </button>
-            <button
-              onClick={() => setDeviceType('laptop')}
-              className={`p-6 md:p-8 rounded-xl border-2 transition-all text-center ${
-                deviceType === 'laptop' 
-                  ? 'border-accent bg-accent/10 shadow-lg' 
-                  : 'border-border hover:border-primary/50'
-              }`}
-            >
-              <Laptop className="h-12 w-12 md:h-16 md:w-16 mx-auto mb-3 text-primary" />
-              <h3 className="font-bold text-lg md:text-xl">Laptop</h3>
-              <p className="text-xs md:text-sm text-muted-foreground mt-1">Portable gaming</p>
-            </button>
-          </div>
-
-          <div className="flex justify-center">
-            <Button
-              size="lg"
-              className="bg-accent hover:bg-accent/90 text-white px-8"
-              onClick={() => setStep('games')}
-            >
-              Continue
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-          </div>
-        </div>
-      )}
-
       {/* Step 1: Games Selection */}
       {step === 'games' && (
         <div className="animate-fade-in">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setStep('device')}
-            className="mb-4"
-          >
-            <ChevronLeft className="mr-1 h-4 w-4" />
-            Back
-          </Button>
 
           <div className="text-center mb-6">
             <h2 className="text-xl md:text-2xl font-bold mb-2">Select which games you enjoy playing</h2>
@@ -176,8 +244,19 @@ const PCFinder = ({ onSelectBuild }: PCFinderProps) => {
                     isSelected ? 'ring-2 ring-accent shadow-lg' : ''
                   }`}
                 >
-                  <div className="aspect-[4/5] bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-                    <Gamepad2 className="h-10 w-10 md:h-12 md:w-12 text-primary/50" />
+                  <div className="aspect-[4/5] bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center relative overflow-hidden">
+                    {game.image && game.image !== '/placeholder.svg' ? (
+                      <img 
+                        src={game.image} 
+                        alt={game.name}
+                        className="absolute inset-0 w-full h-full object-cover"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                        }}
+                      />
+                    ) : (
+                      <Gamepad2 className="h-10 w-10 md:h-12 md:w-12 text-primary/50" />
+                    )}
                   </div>
                   <div className={`absolute inset-0 flex items-end p-2 md:p-3 bg-gradient-to-t from-black/80 to-transparent ${
                     isSelected ? 'from-accent/90' : ''

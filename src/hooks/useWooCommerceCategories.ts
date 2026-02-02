@@ -26,22 +26,29 @@ export const useWooCommerceCategories = (): UseWooCommerceCategoriesReturn => {
     if (categoriesCache && Date.now() - categoriesCacheTime < CACHE_DURATION) {
       setCategories(categoriesCache);
       setLoading(false);
-      // Still try to refresh in background (but don't show loading)
-      // This ensures cache stays fresh
-      const loadCategories = async () => {
-        try {
-          const fetchedCategories = await fetchCategories();
-          categoriesCache = fetchedCategories;
-          categoriesCacheTime = Date.now();
-          setCategories(fetchedCategories);
-          console.log(`Refreshed ${fetchedCategories.length} WooCommerce categories in background`);
-        } catch (err) {
-          // Silently fail background refresh - keep using cache
-          console.warn('Background category refresh failed, using cached data:', err);
-        }
-      };
-      // Refresh cache in background after a short delay
-      setTimeout(loadCategories, 1000);
+      // Only refresh in background if cache is getting old (more than half the duration)
+      // This prevents unnecessary refreshes when navigating between pages
+      const cacheAge = Date.now() - categoriesCacheTime;
+      const shouldRefresh = cacheAge > (CACHE_DURATION / 2);
+      
+      if (shouldRefresh) {
+        // Still try to refresh in background (but don't show loading)
+        // This ensures cache stays fresh
+        const loadCategories = async () => {
+          try {
+            const fetchedCategories = await fetchCategories();
+            categoriesCache = fetchedCategories;
+            categoriesCacheTime = Date.now();
+            setCategories(fetchedCategories);
+            console.log(`Refreshed ${fetchedCategories.length} WooCommerce categories in background`);
+          } catch (err) {
+            // Silently fail background refresh - keep using cache
+            console.warn('Background category refresh failed, using cached data:', err);
+          }
+        };
+        // Refresh cache in background after a longer delay to avoid interfering with navigation
+        setTimeout(loadCategories, 3000);
+      }
       return;
     }
 
