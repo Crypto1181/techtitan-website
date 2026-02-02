@@ -68,7 +68,31 @@ export const fetchProducts = async (params: FetchProductsParams = {}): Promise<F
       pc_component_category: params.pc_component_category
     });
     
-    const response = await fetch(url);
+    // Add timeout and better error handling for SSL/network issues
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+    
+    let response;
+    try {
+      response = await fetch(url, {
+        signal: controller.signal,
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+      });
+      clearTimeout(timeoutId);
+    } catch (fetchError: any) {
+      clearTimeout(timeoutId);
+      // Handle SSL errors specifically
+      if (fetchError.name === 'AbortError') {
+        throw new Error('Request timeout - backend took too long to respond');
+      } else if (fetchError.message?.includes('SSL') || fetchError.message?.includes('ERR_SSL')) {
+        console.error('❌ SSL connection error - backend may be restarting or having certificate issues');
+        throw new Error('SSL connection error - please try again in a few moments. The backend may be restarting.');
+      }
+      throw fetchError;
+    }
 
     if (!response.ok) {
       throw new Error(`Backend API error: ${response.status} ${response.statusText}`);

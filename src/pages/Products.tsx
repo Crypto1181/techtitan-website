@@ -543,13 +543,18 @@ const Products = () => {
     }
   }, [categoryParam, wooCommerceCategoryIds, primaryCategoryId, internalCategoryFilter, isBagsFallback, searchTerm, loadingCategories, categories.length]);
 
+  // IMPORTANT: Don't send pc_component_category when we have a WooCommerce category ID
+  // The category ID is more reliable and the backend will ignore pc_component_category anyway
+  // This prevents double filtering that can exclude valid products
+  const shouldSendPcCategory = !primaryCategoryId && !isBagsFallback && internalCategoryFilter;
+  
   const { products: allProducts, loading, error, totalProducts } = useWooCommerceProducts({
     per_page: (isSearching || isBagsFallback || isLaptopAccessoriesCooler) ? 100 : 24, // Fetch in batches of 100 when searching, bags fallback, or laptop accessories cooler
     page: (isSearching || isBagsFallback || isLaptopAccessoriesCooler) ? 1 : page, // Always start at page 1 when searching, bags fallback, or laptop accessories cooler
     fetchAll: shouldFetchAll, // Fetch ALL pages when searching or viewing laptop accessories cooler
     search: bagsSearchTerm || searchTerm, // Use bags search term for fallback, otherwise use regular search
     category: isBagsFallback ? undefined : primaryCategoryId, // Don't filter by category when doing bags fallback
-    pc_component_category: isBagsFallback ? undefined : internalCategoryFilter, // Don't filter by pc_component_category when doing bags fallback
+    pc_component_category: shouldSendPcCategory ? internalCategoryFilter : undefined, // Only send if no category ID and not bags fallback
     orderby: sortBy as 'date' | 'price' | 'popularity' | 'rating' | 'title',
     order: sortOrder as 'asc' | 'desc',
     featured: featured || undefined,
