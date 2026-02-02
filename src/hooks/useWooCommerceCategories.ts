@@ -26,14 +26,14 @@ export const useWooCommerceCategories = (): UseWooCommerceCategoriesReturn => {
     if (categoriesCache && Date.now() - categoriesCacheTime < CACHE_DURATION) {
       setCategories(categoriesCache);
       setLoading(false);
-      // Only refresh in background if cache is getting old (more than half the duration)
+      // Only refresh in background if cache is getting old (more than 80% of the duration)
       // This prevents unnecessary refreshes when navigating between pages
       const cacheAge = Date.now() - categoriesCacheTime;
-      const shouldRefresh = cacheAge > (CACHE_DURATION / 2);
+      const shouldRefresh = cacheAge > (CACHE_DURATION * 0.8); // Only refresh when cache is 80% expired
       
       if (shouldRefresh) {
         // Still try to refresh in background (but don't show loading)
-        // This ensures cache stays fresh
+        // This ensures cache stays fresh without blocking navigation
         const loadCategories = async () => {
           try {
             const fetchedCategories = await fetchCategories();
@@ -47,7 +47,8 @@ export const useWooCommerceCategories = (): UseWooCommerceCategoriesReturn => {
           }
         };
         // Refresh cache in background after a longer delay to avoid interfering with navigation
-        setTimeout(loadCategories, 3000);
+        // Only refresh when user is idle (not actively navigating)
+        setTimeout(loadCategories, 5000);
       }
       return;
     }

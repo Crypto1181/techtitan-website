@@ -1,7 +1,10 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { PCComponent, sampleComponents, categories, ComponentCategory } from '@/data/pcComponents';
+import { useWooCommerceProducts } from '@/hooks/useWooCommerceProducts';
+import { useWooCommerceCategories } from '@/hooks/useWooCommerceCategories';
+import { categorySlugMap } from '@/data/woocommerce-categories';
 import { 
   Search, Check, AlertCircle, ChevronDown, ChevronUp, Plus, 
   Cpu, CircuitBoard, HardDrive, MemoryStick, Zap, Fan, Monitor, Box
@@ -23,6 +26,7 @@ const categoryIcons: Record<string, any> = {
   psu: Zap,
   cooler: Fan,
   case: Box,
+  monitor: Monitor,
 };
 
 const ComponentSelector = ({
@@ -34,12 +38,132 @@ const ComponentSelector = ({
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedSpecs, setExpandedSpecs] = useState<string | null>(null);
 
-  const filteredComponents = sampleComponents.filter((comp) => {
-    const matchesCategory = !activeCategory || comp.category === activeCategory;
-    const matchesSearch = comp.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      comp.brand.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
+  // Fetch WooCommerce categories to map internal categories to WooCommerce category IDs
+  const { getCategoryIdBySlug, loading: loadingCategories } = useWooCommerceCategories();
+
+  // Map internal category to WooCommerce category slugs
+  const internalToWooCommerceMap: Record<ComponentCategory, string[]> = {
+    'cpu': ['cpu'],
+    'gpu': ['graphic-cards'],
+    'motherboard': ['motherboards'],
+    'ram': ['ram', 'desktop-ram', 'notebook-ram'], // Include all RAM subcategories
+    'storage': ['storage-drives', 'internal-storage'], // Only internal storage, exclude external-storage
+    'psu': ['backup-power'], // WooCommerce uses "backup-power" not "power-supplies"
+    'case': ['cases'],
+    'cooler': ['coolers-fans', 'cooler'],
+    'monitor': ['monitors'],
+    'mouse': ['mouse'],
+    'keyboard': ['keyboards'],
+    'headset': ['headsets'],
+  };
+
+  // Get WooCommerce category IDs for the active category
+  const wooCommerceCategoryIds = useMemo(() => {
+    if (!activeCategory) return undefined;
+    
+    const slugs = internalToWooCommerceMap[activeCategory] || [];
+    const categoryIds: number[] = [];
+    
+    for (const slug of slugs) {
+      // Try direct slug lookup
+      const directSlugs = categorySlugMap[slug] || [slug];
+      for (const wcSlug of directSlugs) {
+        const id = getCategoryIdBySlug(wcSlug);
+        if (id && !categoryIds.includes(id)) {
+          categoryIds.push(id);
+        }
+      }
+    }
+    
+    // Fallback for known categories if lookup fails
+    if (categoryIds.length === 0) {
+      const fallbackIds: Record<ComponentCategory, number> = {
+        'gpu': 118, // Graphics cards
+        'cpu': 117,
+        'motherboard': 116,
+        'ram': 110,
+        'storage': 113,
+        'psu': 0, // No fallback
+        'case': 119,
+        'cooler': 114,
+        'monitor': 0,
+        'mouse': 130,
+        'keyboard': 127,
+        'headset': 121,
+      };
+      const fallbackId = fallbackIds[activeCategory];
+      if (fallbackId) {
+        console.log(`⚠️ Using fallback category ID ${fallbackId} for "${activeCategory}" (category lookup failed)`);
+        return [fallbackId];
+      }
+    }
+    
+    return categoryIds.length > 0 ? categoryIds : undefined;
+  }, [activeCategory, getCategoryIdBySlug]);
+
+  // Fetch WooCommerce products filtered by category IDs
+  // IMPORTANT: Don't use pc_component_category when we have category IDs - backend ignores it anyway
+  // This prevents double filtering that can exclude valid products
+  const { products: wooCommerceProducts, loading } = useWooCommerceProducts(
+    activeCategory
+      ? { 
+          category: wooCommerceCategoryIds, // Use category IDs (with fallback for GPU)
+          // Don't send pc_component_category when we have category IDs
+          per_page: 100 // Fetch 100 products for the active category
+        }
+      : { per_page: 20 }  // Fetch fewer if no category selected
+  );
+
+  // Combine WooCommerce products with sample data (fallback)
+  // Only show sample products if no category is selected AND we're loading
+  // If a category is selected, wait for the correct WooCommerce products
+  const allProducts = useMemo(() => {
+    // If we have an active category, only use WooCommerce products (don't show samples)
+    if (activeCategory && wooCommerceCategoryIds) {
+      // If loading and no products yet, return empty array (don't show wrong products)
+      if (loading && wooCommerceProducts.length === 0) {
+        return [];
+      }
+      return [...wooCommerceProducts];
+    }
+    
+    // If no category selected, show samples while loading
+    if (loading && wooCommerceProducts.length === 0) {
+      return [...sampleComponents];
+    }
+    
+    // Combine WooCommerce products with samples (only if no category selected)
+    const combined = [...wooCommerceProducts];
+    sampleComponents.forEach(sample => {
+      if (!combined.find(p => p.id === sample.id)) {
+        combined.push(sample);
+      }
+    });
+    return combined;
+  }, [loading, wooCommerceProducts, activeCategory, wooCommerceCategoryIds]);
+
+  // Filter components by active category and search - memoized for performance
+  const filteredComponents = useMemo(() => {
+    // If loading and we have an active category, don't show wrong products
+    if (loading && activeCategory && allProducts.length === 0) {
+      return [];
+    }
+    
+    return allProducts.filter((comp) => {
+      const matchesCategory = !activeCategory || comp.category === activeCategory;
+      if (!matchesCategory) return false;
+      
+      if (searchQuery.trim()) {
+        const query = searchQuery.toLowerCase();
+        return comp.name.toLowerCase().includes(query) ||
+          comp.brand.toLowerCase().includes(query) ||
+          Object.values(comp.specs).some(spec => 
+            String(spec).toLowerCase().includes(query)
+          );
+      }
+      return true;
+    });
+  }, [allProducts, activeCategory, searchQuery, loading]);
 
   const checkCompatibility = (component: PCComponent): { compatible: boolean; reason?: string } => {
     const cpu = selectedComponents['cpu'];
@@ -144,6 +268,12 @@ const ComponentSelector = ({
       )}
 
       {/* Components List - Newegg Style Table */}
+      {loading && (
+        <div className="text-center py-12 bg-card rounded-lg border">
+          <p className="text-muted-foreground">Loading products...</p>
+        </div>
+      )}
+      {!loading && (
       <div className="space-y-3">
         {filteredComponents.map((component) => {
           const isSelected = selectedComponents[component.category]?.id === component.id;
@@ -160,10 +290,21 @@ const ComponentSelector = ({
             >
               <div className="flex items-start gap-4">
                 {/* Icon/Image */}
-                <div className={`p-3 rounded-lg flex-shrink-0 ${
+                <div className={`p-3 rounded-lg flex-shrink-0 w-20 h-20 flex items-center justify-center overflow-hidden ${
                   isSelected ? 'bg-accent/20' : 'bg-secondary'
                 }`}>
-                  <IconComponent className={`h-8 w-8 ${isSelected ? 'text-accent' : 'text-muted-foreground'}`} />
+                  {component.image && component.image !== '/placeholder.svg' && !component.image.includes('placeholder') ? (
+                    <img 
+                      src={component.image} 
+                      alt={component.name}
+                      className="max-w-full max-h-full object-contain"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
+                  ) : (
+                    <IconComponent className={`h-8 w-8 ${isSelected ? 'text-accent' : 'text-muted-foreground'}`} />
+                  )}
                 </div>
 
                 {/* Info */}
@@ -277,8 +418,9 @@ const ComponentSelector = ({
           );
         })}
       </div>
+      )}
 
-      {filteredComponents.length === 0 && (
+      {!loading && filteredComponents.length === 0 && (
         <div className="text-center py-12 bg-card rounded-lg border">
           <p className="text-muted-foreground">No components found matching your criteria.</p>
           <Button variant="link" onClick={() => { setSearchQuery(''); onCategoryChange(null); }}>
