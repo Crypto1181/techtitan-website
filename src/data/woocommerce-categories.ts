@@ -1,0 +1,825 @@
+/**
+ * AUTO-GENERATED CATEGORY MAPPING
+ * Generated from WooCommerce API - DO NOT EDIT MANUALLY
+ * Run: node scripts/generate-category-mapping.js
+ * Last updated: 2025-12-30T16:26:58.799Z
+ */
+
+export const categorySlugMap: Record<string, string[]> = {
+  'accessorie': ['accessories'], // Accessories (6 products)
+  'accessories': ['accessories'], // Accessories (6 products)
+  'action camera': ['action-cameras'], // Action Cameras (16 products)
+  'action cameras': ['action-cameras'], // Action Cameras (16 products)
+  'action-camera': ['action-cameras'], // Action Cameras (16 products)
+  'action-cameras': ['action-cameras'], // Action Cameras (16 products)
+  'air cooler': ['air-cooler'], // Air Cooler (22 products)
+  'air coolers': ['air-cooler'], // Air Cooler (22 products)
+  'air-cooler': ['air-cooler'], // Air Cooler (22 products)
+  'air-coolers': ['air-cooler'], // Air Cooler (22 products)
+  'amd board': ['amd-board'], // AMD Board (10 products)
+  'amd boards': ['amd-board'], // AMD Board (10 products)
+  'amd-board': ['amd-board'], // AMD Board (10 products)
+  'amd-boards': ['amd-board'], // AMD Board (10 products)
+  'attendance machine': ['attendance-machine'], // Attendance Machine (0 products)
+  'attendance machines': ['attendance-machine'], // Attendance Machine (0 products)
+  'attendance-machine': ['attendance-machine'], // Attendance Machine (0 products)
+  'attendance-machines': ['attendance-machine'], // Attendance Machine (0 products)
+  'audio cable': ['audio-cables'], // Audio Cables (8 products)
+  'audio cables': ['audio-cables'], // Audio Cables (8 products)
+  'audio-cable': ['audio-cables'], // Audio Cables (8 products)
+  'audio-cables': ['audio-cables'], // Audio Cables (8 products)
+  'baby monitor': ['baby-monitors'], // Baby Monitors (2 products)
+  'baby monitors': ['baby-monitors'], // Baby Monitors (2 products)
+  'baby-monitor': ['baby-monitors'], // Baby Monitors (2 products)
+  'baby-monitors': ['baby-monitors'], // Baby Monitors (2 products)
+  'backup power': ['backup-power'], // Backup Power (13 products)
+  'backup powers': ['backup-power'], // Backup Power (13 products)
+  'backup-power': ['backup-power'], // Backup Power (13 products)
+  'backup-powers': ['backup-power'], // Backup Power (13 products)
+  'bag': ['bags-2'], // Bags (10 products)
+  'bags': ['bags-2', 'bags'], // Bags (10 products)
+  'bags-2': ['bags-2'], // Bags (10 products)
+  'barcode scanner': ['barcode-scanners'], // Barcode Scanners (12 products)
+  'barcode scanners': ['barcode-scanners'], // Barcode Scanners (12 products)
+  'barcode-scanner': ['barcode-scanners'], // Barcode Scanners (12 products)
+  'barcode-scanners': ['barcode-scanners'], // Barcode Scanners (12 products)
+  'batteries &amp; powerbank': ['batteries-powerbanks'], // Batteries &amp; Powerbanks (3 products)
+  'batteries amp powerbanks': ['batteries-powerbanks'], // Batteries &amp; Powerbanks (3 products)
+  'batteries andamp; powerbanks': ['batteries-powerbanks'], // Batteries &amp; Powerbanks (3 products)
+  'batteries-amp-powerbank': ['batteries-powerbanks'], // Batteries &amp; Powerbanks (3 products)
+  'batteries-amp-powerbanks': ['batteries-powerbanks'], // Batteries &amp; Powerbanks (3 products)
+  'batteries-andamp;-powerbanks': ['batteries-powerbanks'], // Batteries &amp; Powerbanks (3 products)
+  'batteries-powerbanks': ['batteries-powerbanks'], // Batteries &amp; Powerbanks (3 products)
+  'bundle': ['bundle'], // Bundle (49 products)
+  'bundles': ['bundle'], // Bundle (49 products)
+  'cables &amp; converter': ['cablesconverters'], // Cables &amp; Converters (230 products)
+  'cables amp converters': ['cablesconverters'], // Cables &amp; Converters (230 products)
+  'cables andamp; converters': ['cablesconverters'], // Cables &amp; Converters (230 products)
+  'cables-amp-converter': ['cablesconverters'], // Cables &amp; Converters (230 products)
+  'cables-amp-converters': ['cablesconverters'], // Cables &amp; Converters (230 products)
+  'cables-andamp;-converters': ['cablesconverters'], // Cables &amp; Converters (230 products)
+  'cablesconverters': ['cablesconverters'], // Cables &amp; Converters (230 products)
+  'capture card': ['capture-card'], // Capture Card (2 products)
+  'capture cards': ['capture-card'], // Capture Card (2 products)
+  'capture-card': ['capture-card'], // Capture Card (2 products)
+  'capture-cards': ['capture-card'], // Capture Card (2 products)
+  'case': ['cases'], // Cases (101 products)
+  'cases': ['cases'], // Cases (101 products)
+  'cash drawer': ['cash-drawer'], // Cash Drawer (3 products)
+  'cash drawers': ['cash-drawer'], // Cash Drawer (3 products)
+  'cash-drawer': ['cash-drawer'], // Cash Drawer (3 products)
+  'cash-drawers': ['cash-drawer'], // Cash Drawer (3 products)
+  'chargers/wireless charger': ['wireless-chargers'], // Chargers/Wireless Chargers (16 products)
+  'chargerswireless chargers': ['wireless-chargers'], // Chargers/Wireless Chargers (16 products)
+  'chargerswireless-charger': ['wireless-chargers'], // Chargers/Wireless Chargers (16 products)
+  'chargerswireless-chargers': ['wireless-chargers'], // Chargers/Wireless Chargers (16 products)
+  'charging cable': ['charging-cables'], // Charging Cables (28 products)
+  'charging cables': ['charging-cables'], // Charging Cables (28 products)
+  'charging-cable': ['charging-cables'], // Charging Cables (28 products)
+  'charging-cables': ['charging-cables'], // Charging Cables (28 products)
+  'coffee machine': ['coffee-machines'], // Coffee Machines (6 products)
+  'coffee machines': ['coffee-machines'], // Coffee Machines (6 products)
+  'coffee-machine': ['coffee-machines'], // Coffee Machines (6 products)
+  'coffee-machines': ['coffee-machines'], // Coffee Machines (6 products)
+  'computer part': ['computer-parts'], // Computer Parts (722 products)
+  'computer parts': ['computer-parts'], // Computer Parts (722 products)
+  'computer-part': ['computer-parts'], // Computer Parts (722 products)
+  'computer-parts': ['computer-parts'], // Computer Parts (722 products)
+  'console': ['consoles'], // Consoles (23 products)
+  'consoles': ['consoles'], // Consoles (23 products)
+  'cooler': ['cooler'], // Cooler (14 products)
+  'coolers': ['cooler'], // Cooler (14 products)
+  'coolers &amp; fan': ['coolers-fans'], // Coolers &amp; Fans (179 products)
+  'coolers amp fans': ['coolers-fans'], // Coolers &amp; Fans (179 products)
+  'coolers andamp; fans': ['coolers-fans'], // Coolers &amp; Fans (179 products)
+  'coolers-amp-fan': ['coolers-fans'], // Coolers &amp; Fans (179 products)
+  'coolers-amp-fans': ['coolers-fans'], // Coolers &amp; Fans (179 products)
+  'coolers-andamp;-fans': ['coolers-fans'], // Coolers &amp; Fans (179 products)
+  'coolers-fans': ['coolers-fans'], // Coolers &amp; Fans (179 products)
+  'cooling fan': ['cooling-fans'], // Cooling Fans (94 products)
+  'cooling fans': ['cooling-fans'], // Cooling Fans (94 products)
+  'cooling-fan': ['cooling-fans'], // Cooling Fans (94 products)
+  'cooling-fans': ['cooling-fans'], // Cooling Fans (94 products)
+  'cosmetic': ['cosmetics'], // Cosmetics (63 products)
+  'cosmetics': ['cosmetics'], // Cosmetics (63 products)
+  'cpu': ['cpu'], // CPU (18 products)
+  'cpus': ['cpu'], // CPU (18 products)
+  'crypto wallet': ['crypto-wallet'], // Crypto Wallet (0 products)
+  'crypto wallets': ['crypto-wallet'], // Crypto Wallet (0 products)
+  'crypto-wallet': ['crypto-wallet'], // Crypto Wallet (0 products)
+  'crypto-wallets': ['crypto-wallet'], // Crypto Wallet (0 products)
+  'decoration': ['decoration'], // Decoration (8 products)
+  'decorations': ['decoration'], // Decoration (8 products)
+  'desk accessorie': ['desk-accessories'], // Desk Accessories (61 products)
+  'desk accessories': ['desk-accessories'], // Desk Accessories (61 products)
+  'desk-accessorie': ['desk-accessories'], // Desk Accessories (61 products)
+  'desk-accessories': ['desk-accessories'], // Desk Accessories (61 products)
+  'desktop': ['desktops'], // Desktops (8 products)
+  'desktop ram': ['desktop-ram'], // Desktop RAM (24 products)
+  'desktop rams': ['desktop-ram'], // Desktop RAM (24 products)
+  'desktop-ram': ['desktop-ram'], // Desktop RAM (24 products)
+  'desktop-rams': ['desktop-ram'], // Desktop RAM (24 products)
+  'desktops': ['desktops'], // Desktops (8 products)
+  'digital photo frame': ['digital-photo-frames'], // Digital Photo Frames (2 products)
+  'digital photo frames': ['digital-photo-frames'], // Digital Photo Frames (2 products)
+  'digital-photo-frame': ['digital-photo-frames'], // Digital Photo Frames (2 products)
+  'digital-photo-frames': ['digital-photo-frames'], // Digital Photo Frames (2 products)
+  'document shredder': ['document-shredder'], // Document Shredder (2 products)
+  'document shredders': ['document-shredder'], // Document Shredder (2 products)
+  'document-shredder': ['document-shredder'], // Document Shredder (2 products)
+  'document-shredders': ['document-shredder'], // Document Shredder (2 products)
+  'drawing tablet': ['drawing-tablet'], // Drawing Tablet (19 products)
+  'drawing tablets': ['drawing-tablet'], // Drawing Tablet (19 products)
+  'drawing-tablet': ['drawing-tablet'], // Drawing Tablet (19 products)
+  'drawing-tablets': ['drawing-tablet'], // Drawing Tablet (19 products)
+  'dslr camera': ['dslr-cameras'], // DSLR Cameras (4 products)
+  'dslr cameras': ['dslr-cameras'], // DSLR Cameras (4 products)
+  'dslr-camera': ['dslr-cameras'], // DSLR Cameras (4 products)
+  'dslr-cameras': ['dslr-cameras'], // DSLR Cameras (4 products)
+  'earphone': ['earphones'], // Earphones (197 products)
+  'earphones': ['earphones'], // Earphones (197 products)
+  'electric toothbrush': ['electric-toothbrush'], // Electric toothbrush (2 products)
+  'electric toothbrushs': ['electric-toothbrush'], // Electric toothbrush (2 products)
+  'electric-toothbrush': ['electric-toothbrush'], // Electric toothbrush (2 products)
+  'electric-toothbrushs': ['electric-toothbrush'], // Electric toothbrush (2 products)
+  'enclosure': ['enclosure'], // Enclosure (3 products)
+  'enclosures': ['enclosure'], // Enclosure (3 products)
+  'ethernet cable': ['ethernet-cables'], // Ethernet Cables (5 products)
+  'ethernet cables': ['ethernet-cables'], // Ethernet Cables (5 products)
+  'ethernet-cable': ['ethernet-cables'], // Ethernet Cables (5 products)
+  'ethernet-cables': ['ethernet-cables'], // Ethernet Cables (5 products)
+  'external memory': ['external-memory'], // External Memory (7 products)
+  'external memorys': ['external-memory'], // External Memory (7 products)
+  'external storage': ['external-storage'], // external storage (41 products)
+  'external storages': ['external-storage'], // external storage (41 products)
+  'external-memory': ['external-memory'], // External Memory (7 products)
+  'external-memorys': ['external-memory'], // External Memory (7 products)
+  'external-storage': ['external-storage'], // external storage (41 products)
+  'external-storages': ['external-storage'], // external storage (41 products)
+  'gaming chairs &amp; desk': ['gaming-chairs-desks'], // Gaming Chairs &amp; Desks (35 products)
+  'gaming chairs amp desks': ['gaming-chairs-desks'], // Gaming Chairs &amp; Desks (35 products)
+  'gaming chairs andamp; desks': ['gaming-chairs-desks'], // Gaming Chairs &amp; Desks (35 products)
+  'gaming earbud': ['gaming-earbuds'], // Gaming Earbuds (4 products)
+  'gaming earbuds': ['gaming-earbuds'], // Gaming Earbuds (4 products)
+  'gaming laptop': ['gaming-laptops'], // Gaming Laptops (41 products)
+  'gaming laptops': ['gaming-laptops'], // Gaming Laptops (41 products)
+  'gaming speaker': ['gaming-speakers'], // Gaming speakers (54 products)
+  'gaming speakers': ['gaming-speakers'], // Gaming speakers (54 products)
+  'gaming-chairs-amp-desk': ['gaming-chairs-desks'], // Gaming Chairs &amp; Desks (35 products)
+  'gaming-chairs-amp-desks': ['gaming-chairs-desks'], // Gaming Chairs &amp; Desks (35 products)
+  'gaming-chairs-andamp;-desks': ['gaming-chairs-desks'], // Gaming Chairs &amp; Desks (35 products)
+  'gaming-chairs-desks': ['gaming-chairs-desks'], // Gaming Chairs &amp; Desks (35 products)
+  'gaming-earbud': ['gaming-earbuds'], // Gaming Earbuds (4 products)
+  'gaming-earbuds': ['gaming-earbuds'], // Gaming Earbuds (4 products)
+  'gaming-laptop': ['gaming-laptops'], // Gaming Laptops (41 products)
+  'gaming-laptops': ['gaming-laptops'], // Gaming Laptops (41 products)
+  'gaming-speaker': ['gaming-speakers'], // Gaming speakers (54 products)
+  'gaming-speakers': ['gaming-speakers'], // Gaming speakers (54 products)
+  'gpu accessorie': ['gpu-accessories'], // GPU Accessories (13 products)
+  'gpu accessories': ['gpu-accessories'], // GPU Accessories (13 products)
+  'gpu-accessorie': ['gpu-accessories'], // GPU Accessories (13 products)
+  'gpu-accessories': ['gpu-accessories'], // GPU Accessories (13 products)
+  'graphic card': ['graphic-cards'], // Graphic Cards (31 products)
+  'graphic cards': ['graphic-cards'], // Graphic Cards (31 products)
+  'graphic-card': ['graphic-cards'], // Graphic Cards (31 products)
+  'graphic-cards': ['graphic-cards'], // Graphic Cards (31 products)
+  'hair care': ['hair-care'], // Hair Care (8 products)
+  'hair cares': ['hair-care'], // Hair Care (8 products)
+  'hair-care': ['hair-care'], // Hair Care (8 products)
+  'hair-cares': ['hair-care'], // Hair Care (8 products)
+  'handie': ['handies'], // Handies (5 products)
+  'handies': ['handies'], // Handies (5 products)
+  'hdd': ['hdd'], // HDD (21 products)
+  'hdds': ['hdd'], // HDD (21 products)
+  'headset': ['headsets'], // Headsets (236 products)
+  'headset accessorie': ['headset-accessories'], // Headset Accessories (12 products)
+  'headset accessories': ['headset-accessories'], // Headset Accessories (12 products)
+  'headset stand': ['headset-stand'], // Headset Stand (9 products)
+  'headset stands': ['headset-stand'], // Headset Stand (9 products)
+  'headset-accessorie': ['headset-accessories'], // Headset Accessories (12 products)
+  'headset-accessories': ['headset-accessories'], // Headset Accessories (12 products)
+  'headset-stand': ['headset-stand'], // Headset Stand (9 products)
+  'headset-stands': ['headset-stand'], // Headset Stand (9 products)
+  'headsets': ['headsets'], // Headsets (236 products)
+  'home appliance': ['home-appliances-2'], // Home Appliances (97 products)
+  'home appliances': ['home-appliances-2'], // Home Appliances (97 products)
+  'home-appliance': ['home-appliances-2'], // Home Appliances (97 products)
+  'home-appliances': ['home-appliances-2'], // Home Appliances (97 products)
+  'home-appliances-2': ['home-appliances-2'], // Home Appliances (97 products)
+  'imac &amp; mac mini/studios': ['imac-mac-mini-studio'], // IMAC &amp; Mac Mini/Studio (8 products)
+  'imac amp mac ministudio': ['imac-mac-mini-studio'], // IMAC &amp; Mac Mini/Studio (8 products)
+  'imac andamp; mac mini/studio': ['imac-mac-mini-studio'], // IMAC &amp; Mac Mini/Studio (8 products)
+  'imac-amp-mac-ministudio': ['imac-mac-mini-studio'], // IMAC &amp; Mac Mini/Studio (8 products)
+  'imac-amp-mac-ministudios': ['imac-mac-mini-studio'], // IMAC &amp; Mac Mini/Studio (8 products)
+  'imac-andamp;-mac-mini/studio': ['imac-mac-mini-studio'], // IMAC &amp; Mac Mini/Studio (8 products)
+  'imac-mac-mini-studio': ['imac-mac-mini-studio'], // IMAC &amp; Mac Mini/Studio (8 products)
+  'ink printer': ['ink-printers'], // Ink Printers (4 products)
+  'ink printers': ['ink-printers'], // Ink Printers (4 products)
+  'ink-printer': ['ink-printers'], // Ink Printers (4 products)
+  'ink-printers': ['ink-printers'], // Ink Printers (4 products)
+  'instant cameras/printer': ['instant-cameras'], // Instant Cameras/Printers (111 products)
+  'instant camerasprinters': ['instant-cameras'], // Instant Cameras/Printers (111 products)
+  'instant-cameras': ['instant-cameras'], // Instant Cameras/Printers (111 products)
+  'instant-camerasprinter': ['instant-cameras'], // Instant Cameras/Printers (111 products)
+  'instant-camerasprinters': ['instant-cameras'], // Instant Cameras/Printers (111 products)
+  'intel board': ['intel-board'], // Intel Board (46 products)
+  'intel boards': ['intel-board'], // Intel Board (46 products)
+  'intel-board': ['intel-board'], // Intel Board (46 products)
+  'intel-boards': ['intel-board'], // Intel Board (46 products)
+  'internal pc cable': ['internal-pc-cables'], // Internal PC Cables (78 products)
+  'internal pc cables': ['internal-pc-cables'], // Internal PC Cables (78 products)
+  'internal storage': ['internal-storage'], // internal storage (43 products)
+  'internal storages': ['internal-storage'], // internal storage (43 products)
+  'internal-pc-cable': ['internal-pc-cables'], // Internal PC Cables (78 products)
+  'internal-pc-cables': ['internal-pc-cables'], // Internal PC Cables (78 products)
+  'internal-storage': ['internal-storage'], // internal storage (43 products)
+  'internal-storages': ['internal-storage'], // internal storage (43 products)
+  'ipl laser removal': ['ipl-laser-removal'], // IPL Laser Removal (4 products)
+  'ipl laser removals': ['ipl-laser-removal'], // IPL Laser Removal (4 products)
+  'ipl-laser-removal': ['ipl-laser-removal'], // IPL Laser Removal (4 products)
+  'ipl-laser-removals': ['ipl-laser-removal'], // IPL Laser Removal (4 products)
+  'joystick': ['joysticks'], // Joysticks (43 products)
+  'joysticks': ['joysticks'], // Joysticks (43 products)
+  'keyboard': ['keyboards'], // Keyboards (283 products)
+  'keyboards': ['keyboards'], // Keyboards (283 products)
+  'kindle': ['kindle'], // Kindle (1 products)
+  'kindles': ['kindle'], // Kindle (1 products)
+  'laptop': ['laptops'], // Laptops (143 products)
+  'laptop accessorie': ['laptop-accessories'], // Laptop Accessories (78 products)
+  'laptop accessories': ['laptop-accessories'], // Laptop Accessories (78 products)
+  'laptop bag': ['bags'], // Laptop Bags (55 products)
+  'laptop bags': ['bags'], // Laptop Bags (55 products)
+  'laptop-accessorie': ['laptop-accessories'], // Laptop Accessories (78 products)
+  'laptop-accessories': ['laptop-accessories'], // Laptop Accessories (78 products)
+  'laptop-bag': ['bags'], // Laptop Bags (55 products)
+  'laptop-bags': ['bags'], // Laptop Bags (55 products)
+  'laptops': ['laptops'], // Laptops (143 products)
+  'laser printer': ['laser-printers'], // Laser Printers (12 products)
+  'laser printers': ['laser-printers'], // Laser Printers (12 products)
+  'laser-printer': ['laser-printers'], // Laser Printers (12 products)
+  'laser-printers': ['laser-printers'], // Laser Printers (12 products)
+  'liquid cooler': ['liquid-coolers'], // Liquid Coolers (63 products)
+  'liquid coolers': ['liquid-coolers'], // Liquid Coolers (63 products)
+  'liquid-cooler': ['liquid-coolers'], // Liquid Coolers (63 products)
+  'liquid-coolers': ['liquid-coolers'], // Liquid Coolers (63 products)
+  'macbook adapter': ['macbook-adapter'], // Macbook adapter (5 products)
+  'macbook adapters': ['macbook-adapter'], // Macbook adapter (5 products)
+  'macbook-adapter': ['macbook-adapter'], // Macbook adapter (5 products)
+  'macbook-adapters': ['macbook-adapter'], // Macbook adapter (5 products)
+  'mesh wifi': ['mesh-wifi'], // Mesh Wifi (18 products)
+  'mesh wifis': ['mesh-wifi'], // Mesh Wifi (18 products)
+  'mesh-wifi': ['mesh-wifi'], // Mesh Wifi (18 products)
+  'mesh-wifis': ['mesh-wifi'], // Mesh Wifi (18 products)
+  'microphone': ['microphone'], // Microphone (50 products)
+  'microphone arm': ['microphone-arm'], // Microphone Arm (5 products)
+  'microphone arms': ['microphone-arm'], // Microphone Arm (5 products)
+  'microphone-arm': ['microphone-arm'], // Microphone Arm (5 products)
+  'microphone-arms': ['microphone-arm'], // Microphone Arm (5 products)
+  'microphones': ['microphone'], // Microphone (50 products)
+  'microsd card': ['microsd-card'], // MicroSD Card (4 products)
+  'microsd cards': ['microsd-card'], // MicroSD Card (4 products)
+  'microsd-card': ['microsd-card'], // MicroSD Card (4 products)
+  'microsd-cards': ['microsd-card'], // MicroSD Card (4 products)
+  'mining board': ['mining-board'], // Mining Board (0 products)
+  'mining boards': ['mining-board'], // Mining Board (0 products)
+  'mining psu': ['mining-psu'], // Mining PSU (0 products)
+  'mining psus': ['mining-psu'], // Mining PSU (0 products)
+  'mining-board': ['mining-board'], // Mining Board (0 products)
+  'mining-boards': ['mining-board'], // Mining Board (0 products)
+  'mining-psu': ['mining-psu'], // Mining PSU (0 products)
+  'mining-psus': ['mining-psu'], // Mining PSU (0 products)
+  'misc': ['misc-2', 'misc'], // Misc (0 products)
+  'misc-2': ['misc-2'], // Misc (0 products)
+  'miscellaneou': ['misc'], // Miscellaneous (25 products)
+  'miscellaneous': ['misc'], // Miscellaneous (25 products)
+  'miscs': ['misc-2'], // Misc (0 products)
+  'mixed': ['mixed'], // Mixed (6 products)
+  'mixeds': ['mixed'], // Mixed (6 products)
+  'mixer': ['mixer'], // Mixer (6 products)
+  'mixers': ['mixer'], // Mixer (6 products)
+  'monitor': ['monitors'], // Monitors (49 products)
+  'monitor arm': ['monitor-arm'], // Monitor Arm (32 products)
+  'monitor arms': ['monitor-arm'], // Monitor Arm (32 products)
+  'monitor stand': ['monitor-stand'], // Monitor Stand (10 products)
+  'monitor stands': ['monitor-stand'], // Monitor Stand (10 products)
+  'monitor-arm': ['monitor-arm'], // Monitor Arm (32 products)
+  'monitor-arms': ['monitor-arm'], // Monitor Arm (32 products)
+  'monitor-stand': ['monitor-stand'], // Monitor Stand (10 products)
+  'monitor-stands': ['monitor-stand'], // Monitor Stand (10 products)
+  'monitors': ['monitors'], // Monitors (49 products)
+  'motherboard': ['motherboards'], // Motherboards (57 products)
+  'motherboards': ['motherboards'], // Motherboards (57 products)
+  'mouse': ['mouse'], // Mouse (333 products)
+  'mousepad': ['mousepads'], // Mousepads (106 products)
+  'mousepads': ['mousepads'], // Mousepads (106 products)
+  'mouses': ['mouse'], // Mouse (333 products)
+  'multimedia': ['multimedia'], // Multimedia (510 products)
+  'multimedias': ['multimedia'], // Multimedia (510 products)
+  'music headset': ['music-headsets'], // Music Headsets (129 products)
+  'music headsets': ['music-headsets'], // Music Headsets (129 products)
+  'music-headset': ['music-headsets'], // Music Headsets (129 products)
+  'music-headsets': ['music-headsets'], // Music Headsets (129 products)
+  'nanoleaf element': ['nanoleaf-elements'], // Nanoleaf Elements (12 products)
+  'nanoleaf elements': ['nanoleaf-elements'], // Nanoleaf Elements (12 products)
+  'nanoleaf-element': ['nanoleaf-elements'], // Nanoleaf Elements (12 products)
+  'nanoleaf-elements': ['nanoleaf-elements'], // Nanoleaf Elements (12 products)
+  'network': ['network'], // Network (192 products)
+  'networks': ['network'], // Network (192 products)
+  'notebook ram': ['notebook-ram'], // Notebook RAM (7 products)
+  'notebook rams': ['notebook-ram'], // Notebook RAM (7 products)
+  'notebook-ram': ['notebook-ram'], // Notebook RAM (7 products)
+  'notebook-rams': ['notebook-ram'], // Notebook RAM (7 products)
+  'nvme': ['nvme'], // NVME M.2 (24 products)
+  'nvme m.2s': ['nvme'], // NVME M.2 (24 products)
+  'nvme m2': ['nvme'], // NVME M.2 (24 products)
+  'nvme-m2': ['nvme'], // NVME M.2 (24 products)
+  'nvme-m2s': ['nvme'], // NVME M.2 (24 products)
+  'office chair': ['office-chairs'], // Office Chairs (7 products)
+  'office chairs': ['office-chairs'], // Office Chairs (7 products)
+  'office-chair': ['office-chairs'], // Office Chairs (7 products)
+  'office-chairs': ['office-chairs'], // Office Chairs (7 products)
+  'other': ['other', 'other-desk-accessories'], // Other (50 products)
+  'other-desk-accessories': ['other-desk-accessories'], // Other (7 products)
+  'others': ['other', 'other-desk-accessories'], // Other (50 products)
+  'pcie card': ['pcie-cards'], // PCIe Cards (9 products)
+  'pcie cards': ['pcie-cards'], // PCIe Cards (9 products)
+  'pcie network card': ['pcie-network-cards'], // PCie Network Cards (6 products)
+  'pcie network cards': ['pcie-network-cards'], // PCie Network Cards (6 products)
+  'pcie-card': ['pcie-cards'], // PCIe Cards (9 products)
+  'pcie-cards': ['pcie-cards'], // PCIe Cards (9 products)
+  'pcie-network-card': ['pcie-network-cards'], // PCie Network Cards (6 products)
+  'pcie-network-cards': ['pcie-network-cards'], // PCie Network Cards (6 products)
+  'pen': ['pens'], // Pens (1 products)
+  'pens': ['pens'], // Pens (1 products)
+  'peripheral': ['peripherals'], // Peripherals (1170 products)
+  'peripherals': ['peripherals'], // Peripherals (1170 products)
+  'phone gimbal': ['phone-gimbal-instant-cameras'], // Phone Gimbal (6 products)
+  'phone gimbals': ['phone-gimbal-instant-cameras'], // Phone Gimbal (6 products)
+  'phone-gimbal': ['phone-gimbal-instant-cameras'], // Phone Gimbal (6 products)
+  'phone-gimbal-instant-cameras': ['phone-gimbal-instant-cameras'], // Phone Gimbal (6 products)
+  'phone-gimbals': ['phone-gimbal-instant-cameras'], // Phone Gimbal (6 products)
+  'poe injector': ['poe-injector'], // PoE Injector (1 products)
+  'poe injectors': ['poe-injector'], // PoE Injector (1 products)
+  'poe-injector': ['poe-injector'], // PoE Injector (1 products)
+  'poe-injectors': ['poe-injector'], // PoE Injector (1 products)
+  'pos system': ['pos-system'], // POS System (5 products)
+  'pos systems': ['pos-system'], // POS System (5 products)
+  'pos-system': ['pos-system'], // POS System (5 products)
+  'pos-systems': ['pos-system'], // POS System (5 products)
+  'power bank': ['power-banks'], // Power Banks (12 products)
+  'power banks': ['power-banks'], // Power Banks (12 products)
+  'power strip outlet': ['power-strip-outlet'], // Power Strip Outlet (18 products)
+  'power strip outlets': ['power-strip-outlet'], // Power Strip Outlet (18 products)
+  'power supplie': ['power-supplies'], // Power Supplies (34 products)
+  'power supplies': ['power-supplies'], // Power Supplies (34 products)
+  'power-bank': ['power-banks'], // Power Banks (12 products)
+  'power-banks': ['power-banks'], // Power Banks (12 products)
+  'power-strip-outlet': ['power-strip-outlet'], // Power Strip Outlet (18 products)
+  'power-strip-outlets': ['power-strip-outlet'], // Power Strip Outlet (18 products)
+  'power-supplie': ['power-supplies'], // Power Supplies (34 products)
+  'power-supplies': ['power-supplies'], // Power Supplies (34 products)
+  'printers': ['printers'], // Printers &amp; POS (62 products)
+  'printers &amp; po': ['printers'], // Printers &amp; POS (62 products)
+  'printers amp pos': ['printers'], // Printers &amp; POS (62 products)
+  'printers andamp; pos': ['printers'], // Printers &amp; POS (62 products)
+  'printers-amp-po': ['printers'], // Printers &amp; POS (62 products)
+  'printers-amp-pos': ['printers'], // Printers &amp; POS (62 products)
+  'printers-andamp;-pos': ['printers'], // Printers &amp; POS (62 products)
+  'projector': ['projector'], // Projector (33 products)
+  'projector accessorie': ['projector-accessories'], // Projector Accessories (2 products)
+  'projector accessories': ['projector-accessories'], // Projector Accessories (2 products)
+  'projector-accessorie': ['projector-accessories'], // Projector Accessories (2 products)
+  'projector-accessories': ['projector-accessories'], // Projector Accessories (2 products)
+  'projectors': ['projector'], // Projector (33 products)
+  'radio': ['radios'], // Radios (5 products)
+  'radios': ['radios'], // Radios (5 products)
+  'ram': ['ram'], // RAM (31 products)
+  'rams': ['ram'], // RAM (31 products)
+  'repeaters &amp; ups routers': ['repeaters-ups-router'], // Repeaters &amp; UPS router (9 products)
+  'repeaters amp ups router': ['repeaters-ups-router'], // Repeaters &amp; UPS router (9 products)
+  'repeaters andamp; ups router': ['repeaters-ups-router'], // Repeaters &amp; UPS router (9 products)
+  'repeaters-amp-ups-router': ['repeaters-ups-router'], // Repeaters &amp; UPS router (9 products)
+  'repeaters-amp-ups-routers': ['repeaters-ups-router'], // Repeaters &amp; UPS router (9 products)
+  'repeaters-andamp;-ups-router': ['repeaters-ups-router'], // Repeaters &amp; UPS router (9 products)
+  'repeaters-ups-router': ['repeaters-ups-router'], // Repeaters &amp; UPS router (9 products)
+  'ring doorbell': ['ring-doorbell'], // Ring Doorbell (3 products)
+  'ring doorbells': ['ring-doorbell'], // Ring Doorbell (3 products)
+  'ring-doorbell': ['ring-doorbell'], // Ring Doorbell (3 products)
+  'ring-doorbells': ['ring-doorbell'], // Ring Doorbell (3 products)
+  'router': ['routers'], // Routers (92 products)
+  'routers': ['routers'], // Routers (92 products)
+  'sata': ['sata'], // SATA (19 products)
+  'satas': ['sata'], // SATA (19 products)
+  'scanner': ['scanner'], // Scanner (5 products)
+  'scanners': ['scanner'], // Scanner (5 products)
+  'sd card': ['sd-card'], // SD Card (2 products)
+  'sd cards': ['sd-card'], // SD Card (2 products)
+  'sd-card': ['sd-card'], // SD Card (2 products)
+  'sd-cards': ['sd-card'], // SD Card (2 products)
+  'security camera': ['security-cameras'], // Security Cameras (62 products)
+  'security cameras': ['security-cameras'], // Security Cameras (62 products)
+  'security-camera': ['security-cameras'], // Security Cameras (62 products)
+  'security-cameras': ['security-cameras'], // Security Cameras (62 products)
+  'shaver for men': ['shaver-for-men'], // Shaver for men (39 products)
+  'shaver for mens': ['shaver-for-men'], // Shaver for men (39 products)
+  'shaver-for-men': ['shaver-for-men'], // Shaver for men (39 products)
+  'shaver-for-mens': ['shaver-for-men'], // Shaver for men (39 products)
+  'skin care': ['skin-care'], // Skin Care (9 products)
+  'skin cares': ['skin-care'], // Skin Care (9 products)
+  'skin-care': ['skin-care'], // Skin Care (9 products)
+  'skin-cares': ['skin-care'], // Skin Care (9 products)
+  'smart home': ['smart-home'], // Smart Home (69 products)
+  'smart homes': ['smart-home'], // Smart Home (69 products)
+  'smart plug': ['smart-plug'], // Smart Plug (3 products)
+  'smart plugs': ['smart-plug'], // Smart Plug (3 products)
+  'smart watche': ['smart-watches'], // Smart Watches (0 products)
+  'smart watches': ['smart-watches'], // Smart Watches (0 products)
+  'smart-home': ['smart-home'], // Smart Home (69 products)
+  'smart-homes': ['smart-home'], // Smart Home (69 products)
+  'smart-plug': ['smart-plug'], // Smart Plug (3 products)
+  'smart-plugs': ['smart-plug'], // Smart Plug (3 products)
+  'smart-watche': ['smart-watches'], // Smart Watches (0 products)
+  'smart-watches': ['smart-watches'], // Smart Watches (0 products)
+  'software': ['softwares'], // Softwares (13 products)
+  'softwares': ['softwares'], // Softwares (13 products)
+  'speaker': ['speakers'], // Speakers (185 products)
+  'speakers': ['speakers'], // Speakers (185 products)
+  'ssd': ['ssd'], // SSD (17 products)
+  'ssd cooler': ['ssd-cooler'], // SSD Cooler (2 products)
+  'ssd coolers': ['ssd-cooler'], // SSD Cooler (2 products)
+  'ssd-cooler': ['ssd-cooler'], // SSD Cooler (2 products)
+  'ssd-coolers': ['ssd-cooler'], // SSD Cooler (2 products)
+  'ssds': ['ssd'], // SSD (17 products)
+  'stand-table': ['stand-table'], // Stand/Table (18 products)
+  'stand/tables': ['stand-table'], // Stand/Table (18 products)
+  'standtable': ['stand-table'], // Stand/Table (18 products)
+  'standtables': ['stand-table'], // Stand/Table (18 products)
+  'storage drive': ['storage-drives'], // Storage Drives (84 products)
+  'storage drives': ['storage-drives'], // Storage Drives (84 products)
+  'storage-drive': ['storage-drives'], // Storage Drives (84 products)
+  'storage-drives': ['storage-drives'], // Storage Drives (84 products)
+  'stream deck': ['stream-deck'], // Stream Deck (3 products)
+  'stream decks': ['stream-deck'], // Stream Deck (3 products)
+  'stream-deck': ['stream-deck'], // Stream Deck (3 products)
+  'stream-decks': ['stream-deck'], // Stream Deck (3 products)
+  'streaming': ['streaming'], // Streaming (115 products)
+  'streamings': ['streaming'], // Streaming (115 products)
+  'switche': ['switches'], // Switches (37 products)
+  'switches': ['switches'], // Switches (37 products)
+  'tablet': ['tablets'], // Tablets (25 products)
+  'tablets': ['tablets'], // Tablets (25 products)
+  'thermal printer': ['thermal-printers'], // Thermal Printers (16 products)
+  'thermal printers': ['thermal-printers'], // Thermal Printers (16 products)
+  'thermal-printer': ['thermal-printers'], // Thermal Printers (16 products)
+  'thermal-printers': ['thermal-printers'], // Thermal Printers (16 products)
+  'tv accessorie': ['tv-accessories'], // TV Accessories (17 products)
+  'tv accessories': ['tv-accessories'], // TV Accessories (17 products)
+  'tv bracket': ['tv-bracket'], // TV Bracket (4 products)
+  'tv brackets': ['tv-bracket'], // TV Bracket (4 products)
+  'tv-accessorie': ['tv-accessories'], // TV Accessories (17 products)
+  'tv-accessories': ['tv-accessories'], // TV Accessories (17 products)
+  'tv-bracket': ['tv-bracket'], // TV Bracket (4 products)
+  'tv-brackets': ['tv-bracket'], // TV Bracket (4 products)
+  'type c hub': ['type-c-hub'], // Type C Hub (54 products)
+  'type c hubs': ['type-c-hub'], // Type C Hub (54 products)
+  'type-c-hub': ['type-c-hub'], // Type C Hub (54 products)
+  'type-c-hubs': ['type-c-hub'], // Type C Hub (54 products)
+  'uncategorized': ['uncategorized'], // Uncategorized (2 products)
+  'uncategorizeds': ['uncategorized'], // Uncategorized (2 products)
+  'up': ['ups-backup-power'], // UPS (10 products)
+  'ups': ['ups-backup-power'], // UPS (10 products)
+  'ups-backup-power': ['ups-backup-power'], // UPS (10 products)
+  'usb drive': ['usb-drive'], // USB Drive (2 products)
+  'usb drives': ['usb-drive'], // USB Drive (2 products)
+  'usb-drive': ['usb-drive'], // USB Drive (2 products)
+  'usb-drives': ['usb-drive'], // USB Drive (2 products)
+  'used laptop': ['used-laptops'], // Used Laptops (0 products)
+  'used laptops': ['used-laptops'], // Used Laptops (0 products)
+  'used-laptop': ['used-laptops'], // Used Laptops (0 products)
+  'used-laptops': ['used-laptops'], // Used Laptops (0 products)
+  'video cable': ['video-cables'], // Video Cables (51 products)
+  'video cables': ['video-cables'], // Video Cables (51 products)
+  'video-cable': ['video-cables'], // Video Cables (51 products)
+  'video-cables': ['video-cables'], // Video Cables (51 products)
+  'vr': ['vr'], // VR (8 products)
+  'vrs': ['vr'], // VR (8 products)
+  'webcam': ['webcam'], // Webcam (32 products)
+  'webcams': ['webcam'], // Webcam (32 products)
+  'wheel': ['wheels'], // Wheels (12 products)
+  'wheels': ['wheels'], // Wheels (12 products)
+  'wifi adapter': ['wifi-adapter'], // Wifi Adapter (20 products)
+  'wifi adapters': ['wifi-adapter'], // Wifi Adapter (20 products)
+  'wifi-adapter': ['wifi-adapter'], // Wifi Adapter (20 products)
+  'wifi-adapters': ['wifi-adapter'], // Wifi Adapter (20 products)
+  'wireless microphone': ['wireless-microphone'], // Wireless microphone (44 products)
+  'wireless microphones': ['wireless-microphone'], // Wireless microphone (44 products)
+  'wireless-chargers': ['wireless-chargers'], // Chargers/Wireless Chargers (16 products)
+  'wireless-microphone': ['wireless-microphone'], // Wireless microphone (44 products)
+  'wireless-microphones': ['wireless-microphone'], // Wireless microphone (44 products)
+  'wrist rest': ['wrist-rest'], // Wrist Rest (3 products)
+  'wrist rests': ['wrist-rest'], // Wrist Rest (3 products)
+  'wrist-rest': ['wrist-rest'], // Wrist Rest (3 products)
+  'wrist-rests': ['wrist-rest'], // Wrist Rest (3 products)
+};
+
+// Category ID to Slug mapping for quick lookups
+export const categoryIdToSlug: Record<number, string> = {
+  15: 'uncategorized', // Uncategorized (2 products)
+  44: 'laptops', // Laptops (143 products)
+  110: 'ram', // RAM (31 products)
+  111: 'power-supplies', // Power Supplies (34 products)
+  113: 'storage-drives', // Storage Drives (84 products)
+  114: 'coolers-fans', // Coolers &amp; Fans (179 products)
+  115: 'monitors', // Monitors (49 products)
+  116: 'motherboards', // Motherboards (57 products)
+  117: 'cpu', // CPU (18 products)
+  118: 'graphic-cards', // Graphic Cards (31 products)
+  119: 'cases', // Cases (101 products)
+  121: 'headsets', // Headsets (236 products)
+  122: 'streaming', // Streaming (115 products)
+  123: 'vr', // VR (8 products)
+  124: 'speakers', // Speakers (185 products)
+  125: 'joysticks', // Joysticks (43 products)
+  126: 'gaming-chairs-desks', // Gaming Chairs &amp; Desks (35 products)
+  127: 'keyboards', // Keyboards (283 products)
+  128: 'bags', // Laptop Bags (55 products)
+  129: 'mousepads', // Mousepads (106 products)
+  130: 'mouse', // Mouse (333 products)
+  132: 'security-cameras', // Security Cameras (62 products)
+  133: 'instant-cameras', // Instant Cameras/Printers (111 products)
+  134: 'music-headsets', // Music Headsets (129 products)
+  135: 'ipl-laser-removal', // IPL Laser Removal (4 products)
+  136: 'smart-home', // Smart Home (69 products)
+  728: 'tablets', // Tablets (25 products)
+  742: 'network', // Network (192 products)
+  1529: 'coffee-machines', // Coffee Machines (6 products)
+  1537: 'nanoleaf-elements', // Nanoleaf Elements (12 products)
+  1639: 'earphones', // Earphones (197 products)
+  1696: 'laptop-accessories', // Laptop Accessories (78 products)
+  1747: 'printers', // Printers &amp; POS (62 products)
+  1923: 'cosmetics', // Cosmetics (63 products)
+  1924: 'shaver-for-men', // Shaver for men (39 products)
+  1925: 'skin-care', // Skin Care (9 products)
+  1926: 'electric-toothbrush', // Electric toothbrush (2 products)
+  1927: 'hair-care', // Hair Care (8 products)
+  1929: 'peripherals', // Peripherals (1170 products)
+  1930: 'computer-parts', // Computer Parts (722 products)
+  2060: 'smart-watches', // Smart Watches (0 products)
+  2103: 'cablesconverters', // Cables &amp; Converters (230 products)
+  2982: 'routers', // Routers (92 products)
+  2983: 'mesh-wifi', // Mesh Wifi (18 products)
+  2984: 'repeaters-ups-router', // Repeaters &amp; UPS router (9 products)
+  2985: 'switches', // Switches (37 products)
+  3157: 'internal-storage', // internal storage (43 products)
+  3158: 'sata', // SATA (19 products)
+  3159: 'nvme', // NVME M.2 (24 products)
+  3160: 'external-storage', // external storage (41 products)
+  3161: 'hdd', // HDD (21 products)
+  3162: 'ssd', // SSD (17 products)
+  3163: 'liquid-coolers', // Liquid Coolers (63 products)
+  3164: 'air-cooler', // Air Cooler (22 products)
+  3165: 'cooling-fans', // Cooling Fans (94 products)
+  3166: 'desktop-ram', // Desktop RAM (24 products)
+  3167: 'notebook-ram', // Notebook RAM (7 products)
+  3270: 'monitor-arm', // Monitor Arm (32 products)
+  3309: 'radios', // Radios (5 products)
+  3435: 'desk-accessories', // Desk Accessories (61 products)
+  3628: 'wifi-adapter', // Wifi Adapter (20 products)
+  3794: 'bundle', // Bundle (49 products)
+  3865: 'consoles', // Consoles (23 products)
+  3904: 'ink-printers', // Ink Printers (4 products)
+  3905: 'laser-printers', // Laser Printers (12 products)
+  3906: 'thermal-printers', // Thermal Printers (16 products)
+  3907: 'barcode-scanners', // Barcode Scanners (12 products)
+  3971: 'intel-board', // Intel Board (46 products)
+  3972: 'amd-board', // AMD Board (10 products)
+  3973: 'mining-board', // Mining Board (0 products)
+  3974: 'mining-psu', // Mining PSU (0 products)
+  3975: 'backup-power', // Backup Power (13 products)
+  3976: 'ups-backup-power', // UPS (10 products)
+  3977: 'batteries-powerbanks', // Batteries &amp; Powerbanks (3 products)
+  3978: 'webcam', // Webcam (32 products)
+  3979: 'microphone', // Microphone (50 products)
+  3980: 'kindle', // Kindle (1 products)
+  3981: 'drawing-tablet', // Drawing Tablet (19 products)
+  3982: 'tv-accessories', // TV Accessories (17 products)
+  3983: 'ring-doorbell', // Ring Doorbell (3 products)
+  3984: 'handies', // Handies (5 products)
+  3985: 'projector', // Projector (33 products)
+  3986: 'charging-cables', // Charging Cables (28 products)
+  3987: 'video-cables', // Video Cables (51 products)
+  3988: 'audio-cables', // Audio Cables (8 products)
+  3989: 'type-c-hub', // Type C Hub (54 products)
+  3990: 'other', // Other (50 products)
+  3991: 'wireless-chargers', // Chargers/Wireless Chargers (16 products)
+  4234: 'cash-drawer', // Cash Drawer (3 products)
+  4355: 'crypto-wallet', // Crypto Wallet (0 products)
+  4381: 'enclosure', // Enclosure (3 products)
+  4409: 'baby-monitors', // Baby Monitors (2 products)
+  4464: 'power-strip-outlet', // Power Strip Outlet (18 products)
+  4514: 'pos-system', // POS System (5 products)
+  4522: 'wheels', // Wheels (12 products)
+  4569: 'multimedia', // Multimedia (510 products)
+  4570: 'gaming-speakers', // Gaming speakers (54 products)
+  4595: 'digital-photo-frames', // Digital Photo Frames (2 products)
+  4603: 'mixed', // Mixed (6 products)
+  4720: 'gaming-laptops', // Gaming Laptops (41 products)
+  4721: 'imac-mac-mini-studio', // IMAC &amp; Mac Mini/Studio (8 products)
+  4836: 'accessories', // Accessories (6 products)
+  4942: 'power-banks', // Power Banks (12 products)
+  5506: 'home-appliances-2', // Home Appliances (97 products)
+  6130: 'usb-drive', // USB Drive (2 products)
+  6537: 'external-memory', // External Memory (7 products)
+  6538: 'microsd-card', // MicroSD Card (4 products)
+  6539: 'sd-card', // SD Card (2 products)
+  6659: 'used-laptops', // Used Laptops (0 products)
+  6805: 'wireless-microphone', // Wireless microphone (44 products)
+  7105: 'misc', // Miscellaneous (25 products)
+  7106: 'misc-2', // Misc (0 products)
+  7730: 'softwares', // Softwares (13 products)
+  7734: 'desktops', // Desktops (8 products)
+  7900: 'macbook-adapter', // Macbook adapter (5 products)
+  8010: 'bags-2', // Bags (10 products)
+  8151: 'pcie-network-cards', // PCie Network Cards (6 products)
+  8457: 'wrist-rest', // Wrist Rest (3 products)
+  8597: 'decoration', // Decoration (8 products)
+  8878: 'headset-stand', // Headset Stand (9 products)
+  8999: 'capture-card', // Capture Card (2 products)
+  9040: 'microphone-arm', // Microphone Arm (5 products)
+  9132: 'stream-deck', // Stream Deck (3 products)
+  9405: 'dslr-cameras', // DSLR Cameras (4 products)
+  9416: 'action-cameras', // Action Cameras (16 products)
+  9460: 'attendance-machine', // Attendance Machine (0 products)
+  9678: 'ethernet-cables', // Ethernet Cables (5 products)
+  10047: 'smart-plug', // Smart Plug (3 products)
+  10051: 'poe-injector', // PoE Injector (1 products)
+  10113: 'pcie-cards', // PCIe Cards (9 products)
+  10140: 'scanner', // Scanner (5 products)
+  10542: 'ssd-cooler', // SSD Cooler (2 products)
+  10636: 'mixer', // Mixer (6 products)
+  10703: 'phone-gimbal-instant-cameras', // Phone Gimbal (6 products)
+  10832: 'document-shredder', // Document Shredder (2 products)
+  10925: 'projector-accessories', // Projector Accessories (2 products)
+  11125: 'gaming-earbuds', // Gaming Earbuds (4 products)
+  11766: 'monitor-stand', // Monitor Stand (10 products)
+  11790: 'cooler', // Cooler (14 products)
+  11808: 'stand-table', // Stand/Table (18 products)
+  11849: 'other-desk-accessories', // Other (7 products)
+  11907: 'tv-bracket', // TV Bracket (4 products)
+  12135: 'headset-accessories', // Headset Accessories (12 products)
+  12451: 'internal-pc-cables', // Internal PC Cables (78 products)
+  12452: 'gpu-accessories', // GPU Accessories (13 products)
+  12671: 'pens', // Pens (1 products)
+  12847: 'office-chairs', // Office Chairs (7 products)
+};
+
+// Category metadata
+export const categoryMetadata: Record<string, { id: number; name: string; count: number; parent?: string }> = {
+  'accessories': { id: 4836, name: 'Accessories', count: 6, parent: 'tablets' },
+  'action-cameras': { id: 9416, name: 'Action Cameras', count: 16, parent: 'instant-cameras' },
+  'air-cooler': { id: 3164, name: 'Air Cooler', count: 22, parent: 'coolers-fans' },
+  'amd-board': { id: 3972, name: 'AMD Board', count: 10, parent: 'motherboards' },
+  'attendance-machine': { id: 9460, name: 'Attendance Machine', count: 0, parent: 'printers' },
+  'audio-cables': { id: 3988, name: 'Audio Cables', count: 8, parent: 'cablesconverters' },
+  'baby-monitors': { id: 4409, name: 'Baby Monitors', count: 2 },
+  'backup-power': { id: 3975, name: 'Backup Power', count: 13 },
+  'bags': { id: 128, name: 'Laptop Bags', count: 55 },
+  'bags-2': { id: 8010, name: 'Bags', count: 10 },
+  'barcode-scanners': { id: 3907, name: 'Barcode Scanners', count: 12, parent: 'printers' },
+  'batteries-powerbanks': { id: 3977, name: 'Batteries &amp; Powerbanks', count: 3, parent: 'backup-power' },
+  'bundle': { id: 3794, name: 'Bundle', count: 49 },
+  'cablesconverters': { id: 2103, name: 'Cables &amp; Converters', count: 230 },
+  'capture-card': { id: 8999, name: 'Capture Card', count: 2, parent: 'streaming' },
+  'cases': { id: 119, name: 'Cases', count: 101, parent: 'computer-parts' },
+  'cash-drawer': { id: 4234, name: 'Cash Drawer', count: 3, parent: 'printers' },
+  'charging-cables': { id: 3986, name: 'Charging Cables', count: 28, parent: 'cablesconverters' },
+  'coffee-machines': { id: 1529, name: 'Coffee Machines', count: 6, parent: 'home-appliances-2' },
+  'computer-parts': { id: 1930, name: 'Computer Parts', count: 722 },
+  'consoles': { id: 3865, name: 'Consoles', count: 23 },
+  'cooler': { id: 11790, name: 'Cooler', count: 14, parent: 'laptop-accessories' },
+  'coolers-fans': { id: 114, name: 'Coolers &amp; Fans', count: 179, parent: 'computer-parts' },
+  'cooling-fans': { id: 3165, name: 'Cooling Fans', count: 94, parent: 'coolers-fans' },
+  'cosmetics': { id: 1923, name: 'Cosmetics', count: 63 },
+  'cpu': { id: 117, name: 'CPU', count: 18, parent: 'computer-parts' },
+  'crypto-wallet': { id: 4355, name: 'Crypto Wallet', count: 0 },
+  'decoration': { id: 8597, name: 'Decoration', count: 8, parent: 'streaming' },
+  'desk-accessories': { id: 3435, name: 'Desk Accessories', count: 61 },
+  'desktop-ram': { id: 3166, name: 'Desktop RAM', count: 24, parent: 'ram' },
+  'desktops': { id: 7734, name: 'Desktops', count: 8, parent: 'laptops' },
+  'digital-photo-frames': { id: 4595, name: 'Digital Photo Frames', count: 2, parent: 'smart-home' },
+  'document-shredder': { id: 10832, name: 'Document Shredder', count: 2, parent: 'printers' },
+  'drawing-tablet': { id: 3981, name: 'Drawing Tablet', count: 19, parent: 'tablets' },
+  'dslr-cameras': { id: 9405, name: 'DSLR Cameras', count: 4, parent: 'instant-cameras' },
+  'earphones': { id: 1639, name: 'Earphones', count: 197, parent: 'multimedia' },
+  'electric-toothbrush': { id: 1926, name: 'Electric toothbrush', count: 2, parent: 'cosmetics' },
+  'enclosure': { id: 4381, name: 'Enclosure', count: 3, parent: 'external-storage' },
+  'ethernet-cables': { id: 9678, name: 'Ethernet Cables', count: 5, parent: 'cablesconverters' },
+  'external-memory': { id: 6537, name: 'External Memory', count: 7 },
+  'external-storage': { id: 3160, name: 'external storage', count: 41, parent: 'storage-drives' },
+  'gaming-chairs-desks': { id: 126, name: 'Gaming Chairs &amp; Desks', count: 35 },
+  'gaming-earbuds': { id: 11125, name: 'Gaming Earbuds', count: 4, parent: 'headsets' },
+  'gaming-laptops': { id: 4720, name: 'Gaming Laptops', count: 41, parent: 'laptops' },
+  'gaming-speakers': { id: 4570, name: 'Gaming speakers', count: 54, parent: 'peripherals' },
+  'gpu-accessories': { id: 12452, name: 'GPU Accessories', count: 13, parent: 'graphic-cards' },
+  'graphic-cards': { id: 118, name: 'Graphic Cards', count: 31, parent: 'computer-parts' },
+  'hair-care': { id: 1927, name: 'Hair Care', count: 8, parent: 'cosmetics' },
+  'handies': { id: 3984, name: 'Handies', count: 5, parent: 'smart-home' },
+  'hdd': { id: 3161, name: 'HDD', count: 21, parent: 'external-storage' },
+  'headset-accessories': { id: 12135, name: 'Headset Accessories', count: 12, parent: 'headsets' },
+  'headset-stand': { id: 8878, name: 'Headset Stand', count: 9, parent: 'headsets' },
+  'headsets': { id: 121, name: 'Headsets', count: 236, parent: 'peripherals' },
+  'home-appliances-2': { id: 5506, name: 'Home Appliances', count: 97 },
+  'imac-mac-mini-studio': { id: 4721, name: 'IMAC &amp; Mac Mini/Studio', count: 8, parent: 'laptops' },
+  'ink-printers': { id: 3904, name: 'Ink Printers', count: 4, parent: 'printers' },
+  'instant-cameras': { id: 133, name: 'Instant Cameras/Printers', count: 111 },
+  'intel-board': { id: 3971, name: 'Intel Board', count: 46, parent: 'motherboards' },
+  'internal-pc-cables': { id: 12451, name: 'Internal PC Cables', count: 78, parent: 'computer-parts' },
+  'internal-storage': { id: 3157, name: 'internal storage', count: 43, parent: 'storage-drives' },
+  'ipl-laser-removal': { id: 135, name: 'IPL Laser Removal', count: 4, parent: 'cosmetics' },
+  'joysticks': { id: 125, name: 'Joysticks', count: 43, parent: 'peripherals' },
+  'keyboards': { id: 127, name: 'Keyboards', count: 283, parent: 'peripherals' },
+  'kindle': { id: 3980, name: 'Kindle', count: 1, parent: 'tablets' },
+  'laptop-accessories': { id: 1696, name: 'Laptop Accessories', count: 78 },
+  'laptops': { id: 44, name: 'Laptops', count: 143 },
+  'laser-printers': { id: 3905, name: 'Laser Printers', count: 12, parent: 'printers' },
+  'liquid-coolers': { id: 3163, name: 'Liquid Coolers', count: 63, parent: 'coolers-fans' },
+  'macbook-adapter': { id: 7900, name: 'Macbook adapter', count: 5, parent: 'computer-parts' },
+  'mesh-wifi': { id: 2983, name: 'Mesh Wifi', count: 18, parent: 'network' },
+  'microphone': { id: 3979, name: 'Microphone', count: 50, parent: 'streaming' },
+  'microphone-arm': { id: 9040, name: 'Microphone Arm', count: 5, parent: 'streaming' },
+  'microsd-card': { id: 6538, name: 'MicroSD Card', count: 4, parent: 'external-memory' },
+  'mining-board': { id: 3973, name: 'Mining Board', count: 0, parent: 'motherboards' },
+  'mining-psu': { id: 3974, name: 'Mining PSU', count: 0, parent: 'power-supplies' },
+  'misc': { id: 7105, name: 'Miscellaneous', count: 25 },
+  'misc-2': { id: 7106, name: 'Misc', count: 0 },
+  'mixed': { id: 4603, name: 'Mixed', count: 6, parent: 'smart-home' },
+  'mixer': { id: 10636, name: 'Mixer', count: 6 },
+  'monitor-arm': { id: 3270, name: 'Monitor Arm', count: 32, parent: 'computer-parts' },
+  'monitor-stand': { id: 11766, name: 'Monitor Stand', count: 10, parent: 'desk-accessories' },
+  'monitors': { id: 115, name: 'Monitors', count: 49, parent: 'computer-parts' },
+  'motherboards': { id: 116, name: 'Motherboards', count: 57, parent: 'computer-parts' },
+  'mouse': { id: 130, name: 'Mouse', count: 333, parent: 'peripherals' },
+  'mousepads': { id: 129, name: 'Mousepads', count: 106, parent: 'peripherals' },
+  'multimedia': { id: 4569, name: 'Multimedia', count: 510 },
+  'music-headsets': { id: 134, name: 'Music Headsets', count: 129, parent: 'multimedia' },
+  'nanoleaf-elements': { id: 1537, name: 'Nanoleaf Elements', count: 12, parent: 'streaming' },
+  'network': { id: 742, name: 'Network', count: 192 },
+  'notebook-ram': { id: 3167, name: 'Notebook RAM', count: 7, parent: 'ram' },
+  'nvme': { id: 3159, name: 'NVME M.2', count: 24, parent: 'internal-storage' },
+  'office-chairs': { id: 12847, name: 'Office Chairs', count: 7, parent: 'peripherals' },
+  'other': { id: 3990, name: 'Other', count: 50, parent: 'cablesconverters' },
+  'other-desk-accessories': { id: 11849, name: 'Other', count: 7, parent: 'desk-accessories' },
+  'pcie-cards': { id: 10113, name: 'PCIe Cards', count: 9, parent: 'computer-parts' },
+  'pcie-network-cards': { id: 8151, name: 'PCie Network Cards', count: 6, parent: 'network' },
+  'pens': { id: 12671, name: 'Pens', count: 1, parent: 'laptop-accessories' },
+  'peripherals': { id: 1929, name: 'Peripherals', count: 1170 },
+  'phone-gimbal-instant-cameras': { id: 10703, name: 'Phone Gimbal', count: 6, parent: 'instant-cameras' },
+  'poe-injector': { id: 10051, name: 'PoE Injector', count: 1, parent: 'network' },
+  'pos-system': { id: 4514, name: 'POS System', count: 5, parent: 'printers' },
+  'power-banks': { id: 4942, name: 'Power Banks', count: 12 },
+  'power-strip-outlet': { id: 4464, name: 'Power Strip Outlet', count: 18, parent: 'cablesconverters' },
+  'power-supplies': { id: 111, name: 'Power Supplies', count: 34, parent: 'computer-parts' },
+  'printers': { id: 1747, name: 'Printers &amp; POS', count: 62 },
+  'projector': { id: 3985, name: 'Projector', count: 33, parent: 'smart-home' },
+  'projector-accessories': { id: 10925, name: 'Projector Accessories', count: 2, parent: 'projector' },
+  'radios': { id: 3309, name: 'Radios', count: 5 },
+  'ram': { id: 110, name: 'RAM', count: 31, parent: 'computer-parts' },
+  'repeaters-ups-router': { id: 2984, name: 'Repeaters &amp; UPS router', count: 9, parent: 'network' },
+  'ring-doorbell': { id: 3983, name: 'Ring Doorbell', count: 3, parent: 'smart-home' },
+  'routers': { id: 2982, name: 'Routers', count: 92, parent: 'network' },
+  'sata': { id: 3158, name: 'SATA', count: 19, parent: 'internal-storage' },
+  'scanner': { id: 10140, name: 'Scanner', count: 5, parent: 'printers' },
+  'sd-card': { id: 6539, name: 'SD Card', count: 2, parent: 'external-memory' },
+  'security-cameras': { id: 132, name: 'Security Cameras', count: 62 },
+  'shaver-for-men': { id: 1924, name: 'Shaver for men', count: 39, parent: 'cosmetics' },
+  'skin-care': { id: 1925, name: 'Skin Care', count: 9, parent: 'cosmetics' },
+  'smart-home': { id: 136, name: 'Smart Home', count: 69 },
+  'smart-plug': { id: 10047, name: 'Smart Plug', count: 3, parent: 'network' },
+  'smart-watches': { id: 2060, name: 'Smart Watches', count: 0 },
+  'softwares': { id: 7730, name: 'Softwares', count: 13, parent: 'computer-parts' },
+  'speakers': { id: 124, name: 'Speakers', count: 185, parent: 'multimedia' },
+  'ssd': { id: 3162, name: 'SSD', count: 17, parent: 'external-storage' },
+  'ssd-cooler': { id: 10542, name: 'SSD Cooler', count: 2, parent: 'computer-parts' },
+  'stand-table': { id: 11808, name: 'Stand/Table', count: 18, parent: 'laptop-accessories' },
+  'storage-drives': { id: 113, name: 'Storage Drives', count: 84, parent: 'computer-parts' },
+  'stream-deck': { id: 9132, name: 'Stream Deck', count: 3, parent: 'streaming' },
+  'streaming': { id: 122, name: 'Streaming', count: 115, parent: 'peripherals' },
+  'switches': { id: 2985, name: 'Switches', count: 37, parent: 'network' },
+  'tablets': { id: 728, name: 'Tablets', count: 25 },
+  'thermal-printers': { id: 3906, name: 'Thermal Printers', count: 16, parent: 'printers' },
+  'tv-accessories': { id: 3982, name: 'TV Accessories', count: 17, parent: 'smart-home' },
+  'tv-bracket': { id: 11907, name: 'TV Bracket', count: 4, parent: 'monitor-arm' },
+  'type-c-hub': { id: 3989, name: 'Type C Hub', count: 54, parent: 'cablesconverters' },
+  'uncategorized': { id: 15, name: 'Uncategorized', count: 2 },
+  'ups-backup-power': { id: 3976, name: 'UPS', count: 10, parent: 'backup-power' },
+  'usb-drive': { id: 6130, name: 'USB Drive', count: 2, parent: 'external-memory' },
+  'used-laptops': { id: 6659, name: 'Used Laptops', count: 0, parent: 'laptops' },
+  'video-cables': { id: 3987, name: 'Video Cables', count: 51, parent: 'cablesconverters' },
+  'vr': { id: 123, name: 'VR', count: 8, parent: 'peripherals' },
+  'webcam': { id: 3978, name: 'Webcam', count: 32, parent: 'streaming' },
+  'wheels': { id: 4522, name: 'Wheels', count: 12, parent: 'peripherals' },
+  'wifi-adapter': { id: 3628, name: 'Wifi Adapter', count: 20, parent: 'network' },
+  'wireless-chargers': { id: 3991, name: 'Chargers/Wireless Chargers', count: 16, parent: 'cablesconverters' },
+  'wireless-microphone': { id: 6805, name: 'Wireless microphone', count: 44, parent: 'instant-cameras' },
+  'wrist-rest': { id: 8457, name: 'Wrist Rest', count: 3, parent: 'keyboards' },
+};

@@ -1,6 +1,9 @@
 import { Star, ShoppingCart, Heart } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { sampleComponents, PCComponent } from '@/data/pcComponents';
+import { useCart } from '@/contexts/CartContext';
+import { useState } from 'react';
 
 interface FeaturedProductsProps {
   title: string;
@@ -21,8 +24,39 @@ const FeaturedProducts = ({ title, products = sampleComponents.slice(0, 5), show
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4">
-        {products.map((product) => (
-          <div key={product.id} className="product-card group">
+        {products.map((product) => {
+          const { addToCart } = useCart();
+          const [currentImageIndex, setCurrentImageIndex] = useState(0);
+          
+          // Get all available images (use images array if available, otherwise fallback to single image)
+          const images = product.images && product.images.length > 0 ? product.images : [product.image];
+          const currentImage = images[currentImageIndex] || product.image;
+          
+          const handleAddToCart = (e: React.MouseEvent) => {
+            e.preventDefault();
+            e.stopPropagation();
+            addToCart(product, 1);
+          };
+          
+          const handleMouseEnter = () => {
+            if (images.length > 1) {
+              // Show next image on hover
+              setCurrentImageIndex((prev) => (prev + 1) % images.length);
+            }
+          };
+
+          const handleMouseLeave = () => {
+            // Reset to first image when mouse leaves
+            setCurrentImageIndex(0);
+          };
+          
+          return (
+          <Link key={product.id} to={`/product/${product.id}`} className="block h-full">
+          <div 
+            className="product-card group h-full cursor-pointer relative"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
             {/* Wishlist button */}
             <Button
               variant="ghost"
@@ -33,11 +67,11 @@ const FeaturedProducts = ({ title, products = sampleComponents.slice(0, 5), show
             </Button>
 
             {/* Product image */}
-            <div className="h-32 md:h-40 flex items-center justify-center mb-3 bg-secondary/30 rounded-md overflow-hidden">
+            <div className="aspect-square flex items-center justify-center mb-3 bg-secondary/30 rounded-md overflow-hidden">
               <img
-                src={product.image}
+                src={currentImage}
                 alt={product.name}
-                className="max-h-full max-w-full object-contain p-2 group-hover:scale-105 transition-transform"
+                className="w-full h-full object-contain transition-opacity duration-300"
               />
             </div>
 
@@ -82,12 +116,15 @@ const FeaturedProducts = ({ title, products = sampleComponents.slice(0, 5), show
               size="sm"
               className="w-full bg-accent hover:bg-accent/90 text-white"
               disabled={!product.inStock}
+              onClick={handleAddToCart}
             >
               <ShoppingCart className="h-4 w-4 mr-2" />
               Add to Cart
             </Button>
           </div>
-        ))}
+          </Link>
+        );
+        })}
       </div>
     </section>
   );

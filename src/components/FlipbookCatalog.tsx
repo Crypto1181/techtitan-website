@@ -1,212 +1,66 @@
-import { useState, useRef, useCallback } from 'react';
-import HTMLFlipBook from 'react-pageflip';
-import { ChevronLeft, ChevronRight, Maximize2, X, BookOpen } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Maximize2, X, BookOpen, ExternalLink, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { useIsMobile } from '@/hooks/use-mobile';
+import PdfFlipbook from '@/components/PdfFlipbook';
+import { fetchSettings, API_BASE_URL } from '@/services/expressBackend';
 
 interface FlipbookCatalogProps {
-  pages?: string[];
   title?: string;
+  subtitle?: string;
+  catalogUrl?: string;
 }
 
-// Sample catalog pages - replace with actual catalog images
-const defaultPages = [
-  'https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=800&fit=crop',
-  'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&h=800&fit=crop',
-  'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=600&h=800&fit=crop',
-  'https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=600&h=800&fit=crop',
-  'https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=600&h=800&fit=crop',
-  'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=800&fit=crop',
-];
-
-// Page component for the flipbook
-const Page = ({ pageNumber, image }: { pageNumber: number; image: string }) => {
-  return (
-    <div className="w-full h-full bg-white shadow-lg overflow-hidden relative">
-      <img
-        src={image}
-        alt={`Catalog page ${pageNumber}`}
-        className="w-full h-full object-cover"
-      />
-      <div className="absolute bottom-2 right-2 bg-black/50 text-white text-xs px-2 py-1 rounded">
-        Page {pageNumber}
-      </div>
-    </div>
-  );
-};
-
-const FlipbookCatalog = ({ pages = defaultPages, title = 'Product Catalog' }: FlipbookCatalogProps) => {
-  const [currentPage, setCurrentPage] = useState(0);
+const FlipbookCatalog = ({
+  title = 'Product Catalog',
+  subtitle: initialSubtitle,
+  catalogUrl: initialCatalogUrl = '/catalogs/peripherals-october-2025.pdf'
+}: FlipbookCatalogProps) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const bookRef = useRef<any>(null);
+  // Use the proxy endpoint by default, so we can support private GitHub repos
+  const [catalogUrl, setCatalogUrl] = useState(`${API_BASE_URL}/settings/catalog-file`);
+  const [subtitle, setSubtitle] = useState(initialSubtitle);
   const isMobile = useIsMobile();
 
-  const totalPages = pages.length;
+  useEffect(() => {
+    const loadSettings = async () => {
+      try {
+        const settings = await fetchSettings();
+        // If settings has a specific URL, we still use the proxy to handle it (e.g. if it's GitHub)
+        // But if it's a local file path, the proxy handles redirect.
+        // So we just keep using the proxy endpoint.
+        
+        // Exception: If the user hasn't set ANYTHING in DB, we might want to fallback to initialCatalogUrl
+        if (!settings.catalog_url) {
+           setCatalogUrl(initialCatalogUrl);
+        } else {
+           // We use the proxy URL with a timestamp to prevent caching if the backend file changes
+           setCatalogUrl(`${API_BASE_URL}/settings/catalog-file?t=${Date.now()}`);
+        }
 
-  const onFlip = useCallback((e: any) => {
-    setCurrentPage(e.data);
-  }, []);
+        if (settings.catalog_subtitle) {
+          setSubtitle(settings.catalog_subtitle);
+        }
+      } catch (error) {
+        console.error('Failed to load settings', error);
+        // Fallback
+        setCatalogUrl(initialCatalogUrl);
+      }
+    };
+    loadSettings();
+  }, [initialCatalogUrl]);
 
-  const goToPrevPage = () => {
-    bookRef.current?.pageFlip()?.flipPrev();
+  const isPdf = /\.pdf(\?.*)?$/i.test(catalogUrl);
+
+  const handleDownload = () => {
+    const link = document.createElement('a');
+    link.href = catalogUrl;
+    link.download = 'Product-Catalog.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
-
-  const goToNextPage = () => {
-    bookRef.current?.pageFlip()?.flipNext();
-  };
-
-  // Mobile: Single page view with swipe
-  const MobileFlipbook = () => (
-    <div className="flex flex-col items-center">
-      <div className="relative w-full max-w-[320px] aspect-[3/4] mx-auto">
-        {/* @ts-ignore */}
-        <HTMLFlipBook
-          ref={bookRef}
-          width={320}
-          height={420}
-          size="stretch"
-          minWidth={280}
-          maxWidth={320}
-          minHeight={370}
-          maxHeight={420}
-          showCover={true}
-          mobileScrollSupport={true}
-          onFlip={onFlip}
-          className="shadow-2xl"
-          style={{}}
-          startPage={0}
-          drawShadow={true}
-          flippingTime={500}
-          usePortrait={true}
-          startZIndex={0}
-          autoSize={false}
-          maxShadowOpacity={0.3}
-          showPageCorners={true}
-          disableFlipByClick={false}
-          swipeDistance={20}
-          clickEventForward={true}
-          useMouseEvents={true}
-        >
-          {pages.map((page, index) => (
-            <div key={index} className="page-content">
-              <Page pageNumber={index + 1} image={page} />
-            </div>
-          ))}
-        </HTMLFlipBook>
-      </div>
-
-      {/* Mobile Controls */}
-      <div className="flex items-center gap-4 mt-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={goToPrevPage}
-          disabled={currentPage === 0}
-          className="flex items-center gap-1"
-        >
-          <ChevronLeft className="h-4 w-4" />
-          Prev
-        </Button>
-
-        <span className="text-sm text-muted-foreground px-3">
-          {currentPage + 1} / {totalPages}
-        </span>
-
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={goToNextPage}
-          disabled={currentPage >= totalPages - 1}
-          className="flex items-center gap-1"
-        >
-          Next
-          <ChevronRight className="h-4 w-4" />
-        </Button>
-      </div>
-
-      <p className="text-xs text-muted-foreground mt-3 text-center">
-        Swipe left or right to flip pages
-      </p>
-    </div>
-  );
-
-  // Desktop: Double page spread view
-  const DesktopFlipbook = ({ width, height }: { width: number; height: number }) => (
-    <div className="flex flex-col items-center">
-      <div className="relative" style={{ width, height }}>
-        {/* @ts-ignore */}
-        <HTMLFlipBook
-          ref={bookRef}
-          width={width / 2}
-          height={height}
-          size="stretch"
-          minWidth={200}
-          maxWidth={450}
-          minHeight={300}
-          maxHeight={600}
-          showCover={true}
-          mobileScrollSupport={true}
-          onFlip={onFlip}
-          className="shadow-2xl"
-          style={{}}
-          startPage={0}
-          drawShadow={true}
-          flippingTime={600}
-          usePortrait={false}
-          startZIndex={0}
-          autoSize={true}
-          maxShadowOpacity={0.5}
-          showPageCorners={true}
-          disableFlipByClick={false}
-          swipeDistance={30}
-          clickEventForward={true}
-          useMouseEvents={true}
-        >
-          {pages.map((page, index) => (
-            <div key={index} className="page-content">
-              <Page pageNumber={index + 1} image={page} />
-            </div>
-          ))}
-        </HTMLFlipBook>
-      </div>
-
-      {/* Desktop Controls */}
-      <div className="flex items-center gap-4 mt-4">
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={goToPrevPage}
-          disabled={currentPage === 0}
-        >
-          <ChevronLeft className="h-5 w-5" />
-        </Button>
-
-        <span className="text-sm text-muted-foreground min-w-[100px] text-center">
-          Page {currentPage + 1} of {totalPages}
-        </span>
-
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={goToNextPage}
-          disabled={currentPage >= totalPages - 1}
-        >
-          <ChevronRight className="h-5 w-5" />
-        </Button>
-
-        {!isFullscreen && (
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => setIsFullscreen(true)}
-          >
-            <Maximize2 className="h-5 w-5" />
-          </Button>
-        )}
-      </div>
-    </div>
-  );
 
   return (
     <section className="py-12 bg-gradient-to-b from-secondary/30 to-background">
@@ -218,37 +72,135 @@ const FlipbookCatalog = ({ pages = defaultPages, title = 'Product Catalog' }: Fl
             </div>
           </div>
           <h2 className="text-2xl md:text-3xl font-bold mb-2">{title}</h2>
+          {subtitle && (
+            <p className="text-muted-foreground text-sm md:text-base mb-2">
+              {subtitle}
+            </p>
+          )}
           <p className="text-muted-foreground text-sm md:text-base">
-            {isMobile 
-              ? 'Tap edges or swipe to flip pages' 
-              : 'Click or drag to flip pages • Click fullscreen for larger view'
+            {isMobile
+              ? 'Tap the catalog to view in fullscreen • Browse our interactive product catalog'
+              : 'Browse our interactive product catalog • Click fullscreen for a better viewing experience'
             }
           </p>
         </div>
 
-        {/* Flipbook */}
+        {/* Catalog Viewer */}
         <div className="flex justify-center">
-          {isMobile ? (
-            <MobileFlipbook />
-          ) : (
-            <DesktopFlipbook width={700} height={450} />
-          )}
+          <div
+            className="relative w-full max-w-7xl catalog-iframe-wrapper"
+            style={{
+              aspectRatio: isMobile ? '16/9' : '16/10',
+              height: isMobile ? '400px' : '800px',
+              minHeight: isMobile ? '400px' : '800px'
+            }}
+          >
+            {isPdf ? (
+              <div
+                className="w-full h-full rounded-lg shadow-2xl bg-background"
+                style={{
+                  height: isMobile ? '400px' : '800px',
+                  minHeight: isMobile ? '400px' : '800px',
+                  pointerEvents: isMobile ? 'none' : 'auto'
+                }}
+              >
+                <PdfFlipbook src={catalogUrl} className="h-full w-full" />
+              </div>
+            ) : (
+              <iframe
+                src={catalogUrl}
+                className="w-full h-full border-0 rounded-lg shadow-2xl catalog-iframe"
+                allowFullScreen
+                allow="fullscreen"
+                title={title}
+                style={{
+                  height: isMobile ? '400px' : '800px',
+                  minHeight: isMobile ? '400px' : '800px',
+                  pointerEvents: isMobile ? 'none' : 'auto'
+                }}
+              />
+            )}
+
+            {/* Mobile tap-to-open overlay */}
+            {isMobile && (
+              <div
+                className="absolute inset-0 z-10 flex items-center justify-center bg-black/5 dark:bg-white/5 rounded-lg cursor-pointer"
+                onClick={() => setIsFullscreen(true)}
+                style={{ touchAction: 'pan-y' }}
+              >
+                <div className="bg-background/90 dark:bg-card/90 px-4 py-2 rounded-lg border border-border shadow-lg">
+                  <p className="text-sm font-medium text-foreground">Tap to view fullscreen</p>
+                </div>
+              </div>
+            )}
+
+            {/* Fullscreen Button */}
+            <div className="absolute top-4 right-4 z-20">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => setIsFullscreen(true)}
+                className="bg-background/90 dark:bg-card/90 hover:bg-background dark:hover:bg-card border-border shadow-lg backdrop-blur-sm"
+                title="Fullscreen"
+              >
+                <Maximize2 className="h-5 w-5 text-foreground" />
+              </Button>
+            </div>
+
+            {/* Open in New Tab Button */}
+            <div className="absolute top-4 right-16 z-20">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => window.open(catalogUrl, '_blank', 'noopener,noreferrer')}
+                className="bg-background/90 dark:bg-card/90 hover:bg-background dark:hover:bg-card border-border shadow-lg backdrop-blur-sm"
+                title="Open in new tab"
+              >
+                <ExternalLink className="h-5 w-5 text-foreground" />
+              </Button>
+            </div>
+
+            {/* Download Button (only for PDF) */}
+            {isPdf && (
+              <div className="absolute top-4 right-28 z-20">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={handleDownload}
+                  className="bg-background/90 dark:bg-card/90 hover:bg-background dark:hover:bg-card border-border shadow-lg backdrop-blur-sm"
+                  title="Download PDF"
+                >
+                  <Download className="h-5 w-5 text-foreground" />
+                </Button>
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* Fullscreen dialog - Desktop only */}
+        {/* Fullscreen Dialog */}
         <Dialog open={isFullscreen} onOpenChange={setIsFullscreen}>
-          <DialogContent className="max-w-[95vw] w-full h-[90vh] p-8">
+          <DialogContent className="max-w-[95vw] w-full h-[90vh] p-4">
             <DialogTitle className="sr-only">{title} - Fullscreen View</DialogTitle>
             <Button
               variant="ghost"
               size="icon"
-              className="absolute top-4 right-4 z-10"
+              className="absolute top-4 right-4 z-10 bg-background/90 dark:bg-card/90 hover:bg-background dark:hover:bg-card border border-border shadow-lg backdrop-blur-sm"
               onClick={() => setIsFullscreen(false)}
             >
-              <X className="h-6 w-6" />
+              <X className="h-6 w-6 text-foreground" />
             </Button>
-            <div className="flex items-center justify-center h-full">
-              <DesktopFlipbook width={1000} height={650} />
+            <div className="flex items-center justify-center h-full w-full">
+              {isPdf ? (
+                <PdfFlipbook src={catalogUrl} className="h-full w-full" />
+              ) : (
+                <iframe
+                  src={catalogUrl}
+                  className="w-full h-full border-0 rounded-lg"
+                  allowFullScreen
+                  allow="fullscreen"
+                  title={`${title} - Fullscreen`}
+                />
+              )}
             </div>
           </DialogContent>
         </Dialog>

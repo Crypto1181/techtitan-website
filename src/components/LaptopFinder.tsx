@@ -1,6 +1,9 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
+import { useWooCommerceProducts } from '@/hooks/useWooCommerceProducts';
+import { useCart } from '@/contexts/CartContext';
 import { 
   Laptop, Home, Gamepad2, Briefcase, Video, GraduationCap,
   Sparkles, Feather, Battery, Fingerprint, Keyboard, Camera,
@@ -120,7 +123,112 @@ const LaptopFinder = () => {
     );
   };
 
-  const filteredLaptops = sampleLaptops.filter(laptop => {
+  // Fetch WooCommerce products (laptops) - fetch all to get laptops
+  const { products: wooCommerceProducts, loading } = useWooCommerceProducts({
+    fetchAll: true,
+  });
+
+  // Filter for laptops - improved matching
+  // Check product name and specs for laptop indicators
+  const laptopProducts = useMemo(() => {
+    const laptops = wooCommerceProducts.filter(p => {
+      const nameLower = p.name.toLowerCase();
+      const categoryLower = p.category?.toLowerCase() || '';
+      
+      // Check if it's a laptop by name (most reliable)
+      const hasLaptopName = nameLower.includes('laptop') || 
+             nameLower.includes('notebook') ||
+             nameLower.includes('macbook') ||
+             nameLower.includes('imac') ||
+             nameLower.includes('chromebook') ||
+             nameLower.includes('surface laptop') ||
+             nameLower.includes('thinkpad') ||
+             nameLower.includes('xps') ||
+             nameLower.includes('inspiron') ||
+             nameLower.includes('pavilion') ||
+             nameLower.includes('envy') ||
+             nameLower.includes('spectre') ||
+             nameLower.includes('yoga') ||
+             nameLower.includes('ideapad');
+      
+      // Check specs for laptop indicators
+      const specsText = Object.values(p.specs).join(' ').toLowerCase();
+      const hasLaptopSpecs = specsText.includes('laptop') || 
+                            specsText.includes('notebook') ||
+                            specsText.includes('portable computer');
+      
+      // Exclude PC components that might have "laptop" in description but aren't laptops
+      const isPCComponent = ['cpu', 'gpu', 'motherboard', 'ram', 'storage', 'psu', 'cooler', 'case', 'monitor', 'mouse', 'keyboard', 'headset'].includes(categoryLower);
+      
+      // It's a laptop if it has laptop name/specs AND is not a PC component
+      return (hasLaptopName || hasLaptopSpecs) && !isPCComponent;
+    });
+    
+    // Map to LaptopResult format
+    return laptops.map((product) => {
+      // Extract features from product name and specs
+      const nameLower = product.name.toLowerCase();
+      const features: string[] = [];
+      
+      if (nameLower.includes('gaming')) features.push('gaming');
+      if (nameLower.includes('thin') || nameLower.includes('ultrabook')) features.push('thin');
+      if (product.specs.battery || nameLower.includes('battery')) features.push('battery');
+      if (nameLower.includes('touch') || product.specs.touchscreen) features.push('touchscreen');
+      if (nameLower.includes('backlit') || product.specs.backlit) features.push('backlit');
+      if (nameLower.includes('webcam') || product.specs.webcam) features.push('webcam');
+      
+      // Determine usage type from name/specs
+      if (nameLower.includes('gaming') || nameLower.includes('rog') || nameLower.includes('predator')) {
+        features.push('gaming');
+      } else if (nameLower.includes('business') || nameLower.includes('thinkpad') || nameLower.includes('latitude')) {
+        features.push('work');
+      } else if (nameLower.includes('creative') || nameLower.includes('studio') || nameLower.includes('macbook pro')) {
+        features.push('content');
+      } else {
+        features.push('home');
+      }
+      
+      return {
+        id: product.id,
+        name: product.name,
+        brand: product.brand,
+        price: product.price,
+        specs: {
+          processor: product.specs.processor || product.specs.cpu || product.specs['processor model'] || 'Not specified',
+          ram: product.specs.ram || product.specs.memory || product.specs['memory size'] || 'Not specified',
+          storage: product.specs.storage || product.specs.ssd || product.specs.hdd || product.specs['storage capacity'] || 'Not specified',
+          display: product.specs.display || product.specs.screen || product.specs['screen size'] || 'Not specified',
+          battery: product.specs.battery || product.specs['battery life'] || 'Not specified',
+        },
+        features: [...new Set(features)], // Remove duplicates
+        rating: 4.5,
+        image: product.image || '/placeholder.svg',
+      };
+    });
+  }, [wooCommerceProducts]);
+
+  // Combine with sample laptops - prioritize real products, show samples while loading
+  const allLaptops = useMemo(() => {
+    // If we have real laptop products, use them; otherwise show samples
+    if (laptopProducts.length > 0) {
+      const combined = [...laptopProducts];
+      // Only add samples that aren't duplicates
+      sampleLaptops.forEach(sample => {
+        if (!combined.find(l => l.id === sample.id)) {
+          combined.push(sample);
+        }
+      });
+      return combined;
+    } else if (loading) {
+      // While loading, show sample laptops so users can see something
+      return sampleLaptops;
+    } else {
+      // After loading, if no real products found, still show samples
+      return sampleLaptops;
+    }
+  }, [laptopProducts, loading]);
+
+  const filteredLaptops = allLaptops.filter(laptop => {
     const inBudget = laptop.price >= budgetRange[0] && laptop.price <= budgetRange[1];
     const matchesUsage = !selectedUsage || laptop.features.includes(selectedUsage);
     const matchesFeatures = selectedFeatures.length === 0 || 
@@ -176,7 +284,7 @@ const LaptopFinder = () => {
                       : 'border-border hover:border-primary/50'
                   }`}
                 >
-                  <usage.icon className={`h-6 w-6 mb-2 ${isSelected ? 'text-accent' : 'text-muted-foreground'}`} />
+                  <usage.icon className={`h-6 w-6 mb-2 flex-shrink-0 ${isSelected ? 'text-accent' : 'text-foreground'}`} />
                   <span className="text-xs md:text-sm font-medium text-center">{usage.name}</span>
                 </button>
               );
@@ -226,7 +334,7 @@ const LaptopFinder = () => {
                       : 'border-border hover:border-primary/50'
                   }`}
                 >
-                  <feature.icon className={`h-4 w-4 ${isSelected ? 'text-accent' : 'text-muted-foreground'}`} />
+                  <feature.icon className={`h-4 w-4 flex-shrink-0 ${isSelected ? 'text-accent' : 'text-foreground'}`} />
                   <span className="text-xs md:text-sm font-medium">{feature.name}</span>
                   {isSelected && <Check className="h-3 w-3 text-accent ml-auto" />}
                 </button>
@@ -265,12 +373,53 @@ const LaptopFinder = () => {
             </div>
           ) : (
             <div className="grid gap-4">
-              {filteredLaptops.map((laptop) => (
-                <div key={laptop.id} className="bg-card border rounded-lg p-4 md:p-6 hover:shadow-lg transition-shadow">
+              {filteredLaptops.map((laptop) => {
+                const { addToCart } = useCart();
+                const handleAddToCart = (e: React.MouseEvent) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  // Convert laptop to PCComponent format for cart
+                  const pcComponent: any = {
+                    id: laptop.id,
+                    name: laptop.name,
+                    brand: laptop.brand,
+                    category: 'cpu', // Default category
+                    price: laptop.price,
+                    image: laptop.image,
+                    specs: laptop.specs,
+                    inStock: true,
+                    compatibility: {}
+                  };
+                  addToCart(pcComponent, 1);
+                };
+                return (
+                <Link key={laptop.id} to={`/product/${laptop.id}`} className="block">
+                <div className="bg-card border rounded-lg p-4 md:p-6 hover:shadow-lg transition-shadow cursor-pointer">
                   <div className="flex flex-col md:flex-row gap-4">
                     {/* Image */}
-                    <div className="w-full md:w-48 h-32 md:h-36 bg-secondary/50 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <Laptop className="h-16 w-16 text-muted-foreground" />
+                    <div className="w-full md:w-48 h-32 md:h-36 bg-secondary/50 rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden">
+                      {laptop.image && laptop.image !== '/placeholder.svg' && !laptop.image.includes('placeholder') ? (
+                        <img 
+                          src={laptop.image} 
+                          alt={laptop.name}
+                          className="max-w-full max-h-full object-contain p-2"
+                          loading="lazy"
+                          onError={(e) => {
+                            // Hide broken image and show icon instead
+                            const img = e.currentTarget;
+                            img.style.display = 'none';
+                            const parent = img.parentElement;
+                            if (parent && !parent.querySelector('.laptop-icon-fallback')) {
+                              const icon = document.createElement('div');
+                              icon.className = 'laptop-icon-fallback';
+                              icon.innerHTML = '<svg class="h-16 w-16 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>';
+                              parent.appendChild(icon);
+                            }
+                          }}
+                        />
+                      ) : (
+                        <Laptop className="h-16 w-16 text-muted-foreground" />
+                      )}
                     </div>
 
                     {/* Info */}
@@ -304,7 +453,10 @@ const LaptopFinder = () => {
                         {/* Price & CTA - Desktop */}
                         <div className="hidden md:block text-right">
                           <p className="text-2xl font-bold text-accent">${laptop.price.toFixed(2)}</p>
-                          <Button className="mt-3 bg-accent hover:bg-accent/90 text-white">
+                          <Button 
+                            className="mt-3 bg-accent hover:bg-accent/90 text-white"
+                            onClick={handleAddToCart}
+                          >
                             <ShoppingCart className="h-4 w-4 mr-2" />
                             Add to Cart
                           </Button>
@@ -314,7 +466,11 @@ const LaptopFinder = () => {
                       {/* Price & CTA - Mobile */}
                       <div className="flex md:hidden items-center justify-between mt-4 pt-4 border-t">
                         <p className="text-xl font-bold text-accent">${laptop.price.toFixed(2)}</p>
-                        <Button size="sm" className="bg-accent hover:bg-accent/90 text-white">
+                        <Button 
+                          size="sm" 
+                          className="bg-accent hover:bg-accent/90 text-white"
+                          onClick={handleAddToCart}
+                        >
                           <ShoppingCart className="h-4 w-4 mr-1" />
                           Add to Cart
                         </Button>
@@ -322,7 +478,9 @@ const LaptopFinder = () => {
                     </div>
                   </div>
                 </div>
-              ))}
+                </Link>
+                );
+              })}
             </div>
           )}
         </div>

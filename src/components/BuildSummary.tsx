@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { PCComponent, categories } from '@/data/pcComponents';
-import { ShoppingCart, Save, Share2, Trash2 } from 'lucide-react';
+import { ShoppingCart, Save, Share2, Trash2, Check } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 interface BuildSummaryProps {
   selectedComponents: Record<string, PCComponent | null>;
@@ -8,12 +10,78 @@ interface BuildSummaryProps {
 }
 
 const BuildSummary = ({ selectedComponents, onRemoveComponent }: BuildSummaryProps) => {
+  const { toast } = useToast();
+  const [saved, setSaved] = useState(false);
+  
   const totalPrice = Object.values(selectedComponents)
     .filter(Boolean)
     .reduce((sum, comp) => sum + (comp?.price || 0), 0);
 
   const selectedCount = Object.values(selectedComponents).filter(Boolean).length;
   const completionPercentage = (selectedCount / categories.length) * 100;
+
+  const handleSaveBuild = () => {
+    try {
+      const buildData = {
+        components: selectedComponents,
+        totalPrice,
+        savedAt: new Date().toISOString(),
+      };
+      localStorage.setItem('savedBuild', JSON.stringify(buildData));
+      setSaved(true);
+      toast({
+        title: "Build Saved",
+        description: "Your build has been saved successfully!",
+      });
+      setTimeout(() => setSaved(false), 2000);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to save build. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleShareBuild = async () => {
+    try {
+      const buildData = {
+        components: Object.entries(selectedComponents)
+          .filter(([_, comp]) => comp !== null)
+          .map(([category, comp]) => ({
+            category,
+            id: comp!.id,
+            name: comp!.name,
+          })),
+        totalPrice,
+      };
+      
+      const shareUrl = `${window.location.origin}${window.location.pathname}?build=${encodeURIComponent(JSON.stringify(buildData))}`;
+      
+      if (navigator.share) {
+        await navigator.share({
+          title: 'My PC Build',
+          text: `Check out my PC build: $${totalPrice.toFixed(2)}`,
+          url: shareUrl,
+        });
+      } else {
+        await navigator.clipboard.writeText(shareUrl);
+        toast({
+          title: "Link Copied",
+          description: "Build link has been copied to clipboard!",
+        });
+      }
+    } catch (error) {
+      // User cancelled or error occurred
+      if (error instanceof Error && error.name !== 'AbortError') {
+        toast({
+          title: "Error",
+          description: "Failed to share build. Please try again.",
+          variant: "destructive",
+        });
+      }
+    }
+  };
 
   return (
     <div className="bg-card border border-border rounded-lg p-6 sticky top-24 shadow-sm">
@@ -100,11 +168,21 @@ const BuildSummary = ({ selectedComponents, onRemoveComponent }: BuildSummaryPro
           Add to Cart
         </Button>
         <div className="flex gap-2">
-          <Button variant="outline" className="flex-1" disabled={selectedCount === 0}>
-            <Save className="h-4 w-4" />
-            Save Build
+          <Button 
+            variant="outline" 
+            className="flex-1" 
+            disabled={selectedCount === 0 || saved}
+            onClick={handleSaveBuild}
+          >
+            {saved ? <Check className="h-4 w-4" /> : <Save className="h-4 w-4" />}
+            {saved ? 'Saved!' : 'Save Build'}
           </Button>
-          <Button variant="outline" className="flex-1" disabled={selectedCount === 0}>
+          <Button 
+            variant="outline" 
+            className="flex-1" 
+            disabled={selectedCount === 0}
+            onClick={handleShareBuild}
+          >
             <Share2 className="h-4 w-4" />
             Share
           </Button>

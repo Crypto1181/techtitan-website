@@ -15,7 +15,7 @@ const reviews = [
     id: 1,
     name: 'N.S',
     rating: 5,
-    text: 'Best customer service I have seen in while they have top quality products and at great prices 100% recommend N.S Company Name',
+    text: 'Best customer service I have seen in while they have top quality products and at great prices 100% recommend TechTitan',
   },
   {
     id: 2,

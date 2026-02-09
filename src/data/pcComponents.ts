@@ -7,6 +7,7 @@ export type ComponentCategory =
   | 'psu'
   | 'case'
   | 'cooler'
+  | 'monitor'
   | 'mouse'
   | 'keyboard'
   | 'headset';
@@ -18,6 +19,7 @@ export interface PCComponent {
   category: ComponentCategory;
   price: number;
   image: string;
+  images?: string[]; // Gallery images for hover functionality
   specs: Record<string, string>;
   inStock: boolean;
   compatibility: {
@@ -44,6 +46,7 @@ export const categories: CategoryInfo[] = [
   { id: 'psu', name: 'Power Supply', icon: '⚡', description: 'PSU' },
   { id: 'cooler', name: 'CPU Cooler', icon: '❄️', description: 'Cooling' },
   { id: 'case', name: 'Case', icon: '🖥️', description: 'Chassis' },
+  { id: 'monitor', name: 'Monitor', icon: '🖥️', description: 'Display' },
   { id: 'mouse', name: 'Mouse', icon: '🖱️', description: 'Gaming Mouse' },
   { id: 'keyboard', name: 'Keyboard', icon: '⌨️', description: 'Gaming Keyboard' },
   { id: 'headset', name: 'Headset', icon: '🎧', description: 'Gaming Headset' },
@@ -373,12 +376,44 @@ export const preBuilds = {
 };
 
 export const popularGames = [
-  { id: 'cyberpunk', name: 'Cyberpunk 2077', image: '/placeholder.svg' },
-  { id: 'cod', name: 'Call of Duty: MW3', image: '/placeholder.svg' },
-  { id: 'fortnite', name: 'Fortnite', image: '/placeholder.svg' },
-  { id: 'valorant', name: 'Valorant', image: '/placeholder.svg' },
-  { id: 'gta', name: 'GTA V', image: '/placeholder.svg' },
-  { id: 'minecraft', name: 'Minecraft', image: '/placeholder.svg' },
-  { id: 'eldenring', name: 'Elden Ring', image: '/placeholder.svg' },
-  { id: 'starfield', name: 'Starfield', image: '/placeholder.svg' },
+  { 
+    id: 'cyberpunk', 
+    name: 'Cyberpunk 2077', 
+    image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1091500/a757b56d2078be8b09a04e2ad531f1fefafaa129/capsule_616x353.jpg?t=1766141193' 
+  },
+  { 
+    id: 'cod', 
+    name: 'Call of Duty: MW3', 
+    image: 'https://www.callofduty.com/content/dam/atvi/callofduty/cod-touchui/store/games/mw3/overview/Store_GamesPDP_Hero01.png' 
+  },
+  { 
+    id: 'fortnite', 
+    name: 'Fortnite', 
+    image: 'https://cdn2.unrealengine.com/the-future-of-fortnite-is-here-1920x1080-fd281a65c8ef.jpg' 
+  },
+  { 
+    id: 'valorant', 
+    name: 'Valorant', 
+    image: 'https://cdn1.epicgames.com/offer/cbd5b3d310a54b12bf3fe8c41994174f/EGS_VALORANT_RiotGames_S1_2560x1440-892482f9cbec5827c7c4989d7feb2bf1' 
+  },
+  { 
+    id: 'gta', 
+    name: 'GTA V', 
+    image: 'https://vulcanpost.com/wp-content/uploads/2015/04/GTAV-Review.jpg' 
+  },
+  { 
+    id: 'minecraft', 
+    name: 'Minecraft', 
+    image: 'https://assets.nintendo.com/image/upload/q_auto/f_auto/store/software/switch/70010000000964/a28a81253e919298beab2295e39a56b7a5140ef15abdb56135655e5c221b2a3a' 
+  },
+  { 
+    id: 'eldenring', 
+    name: 'Elden Ring', 
+    image: 'https://www.nintendo.com/eu/media/images/assets/nintendo_switch_2_games/eldenringtarnishededition/2x1_NSwitch2_EldenRing.jpg' 
+  },
+  { 
+    id: 'starfield', 
+    name: 'Starfield', 
+    image: 'https://xboxwire.thesourcemediaassets.com/sites/2/2022/06/StarfieldShowcase_HERO-165ee8e45d4141d2d754.jpg' 
+  },
 ];

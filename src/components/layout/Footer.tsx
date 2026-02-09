@@ -1,5 +1,6 @@
+import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin } from 'lucide-react';
-import techTitanLogo from '@/assets/techtitan-logo.png';
+import techTitanLogo from '@/assets/new tech 200x 200.png';
 
 interface FooterProps {
   onTabChange: (tab: string) => void;
@@ -14,9 +15,8 @@ const Footer = ({ onTabChange }: FooterProps) => {
           <div>
             <h3 className="font-bold mb-4">TechTitan</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><a href="#" className="hover:text-primary">About Us</a></li>
-              <li><a href="#" className="hover:text-primary">Contact</a></li>
-              <li><a href="#" className="hover:text-primary">Careers</a></li>
+              <li><Link to="/about-us" className="hover:text-primary">About Us</Link></li>
+              <li><a href="https://wa.me/96176653008" target="_blank" rel="noopener noreferrer" className="hover:text-primary">Contact</a></li>
             </ul>
           </div>
 
@@ -24,9 +24,8 @@ const Footer = ({ onTabChange }: FooterProps) => {
           <div>
             <h3 className="font-bold mb-4">Customer Service</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><a href="#" className="hover:text-primary">FAQ</a></li>
-              <li><a href="#" className="hover:text-primary">Shipping Info</a></li>
-              <li><a href="#" className="hover:text-primary">Returns</a></li>
+              <li><Link to="/faq" className="hover:text-primary">FAQ</Link></li>
+              <li><Link to="/shipping-info" className="hover:text-primary">Shipping Info</Link></li>
             </ul>
           </div>
 
@@ -81,7 +80,7 @@ const Footer = ({ onTabChange }: FooterProps) => {
                 href="https://wa.me/96176653008" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-[#25D366] transition-colors"
+                className="text-[#25D366] hover:opacity-80 transition-colors"
                 aria-label="WhatsApp"
               >
                 <svg className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
@@ -92,7 +91,7 @@ const Footer = ({ onTabChange }: FooterProps) => {
                 href="https://facebook.com/techtitanlb" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-[#1877F2] transition-colors"
+                className="text-[#1877F2] hover:opacity-80 transition-colors"
                 aria-label="Facebook"
               >
                 <svg className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
@@ -103,7 +102,7 @@ const Footer = ({ onTabChange }: FooterProps) => {
                 href="https://instagram.com/techtitanlb" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-[#E4405F] transition-colors"
+                className="text-[#E4405F] hover:opacity-80 transition-colors"
                 aria-label="Instagram"
               >
                 <svg className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
@@ -114,7 +113,7 @@ const Footer = ({ onTabChange }: FooterProps) => {
                 href="https://maps.google.com/?q=TechTitan+Lebanon" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-[#EA4335] transition-colors"
+                className="text-[#EA4335] hover:opacity-80 transition-colors"
                 aria-label="Google Maps"
               >
                 <svg className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
@@ -125,7 +124,7 @@ const Footer = ({ onTabChange }: FooterProps) => {
                 href="https://tiktok.com/@techtitanlb" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-foreground transition-colors"
+                className="text-[#000000] dark:text-[#FFFFFF] hover:opacity-80 transition-colors"
                 aria-label="TikTok"
               >
                 <svg className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">

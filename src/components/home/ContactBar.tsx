@@ -12,10 +12,10 @@ const ContactBar = () => {
             <Button
               variant="outline"
               className="bg-primary text-primary-foreground border-primary hover:bg-primary/90 font-bold text-lg"
-              onClick={() => window.open('tel:+96176653008', '_self')}
+              onClick={() => window.open('tel:+12038222073', '_self')}
             >
               <Phone className="h-4 w-4 mr-2" />
-              76 653 008
+              +1 (203) 822-2073
             </Button>
           </div>
 
@@ -24,7 +24,7 @@ const ContactBar = () => {
             <span className="text-sm text-muted-foreground">Have any questions?</span>
             <Button
               className="bg-accent text-white hover:bg-accent/90 font-bold"
-              onClick={() => window.open('https://wa.me/96176653008', '_blank')}
+              onClick={() => window.open('https://wa.me/12038222073', '_blank')}
             >
               <MessageCircle className="h-4 w-4 mr-2" />
               Contact us

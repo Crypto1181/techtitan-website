@@ -5,7 +5,7 @@
 
 // Backend API base URL - defaults to localhost:3001
 // Set VITE_BACKEND_API_URL in .env file to override
-const API_BASE_URL = import.meta.env.VITE_BACKEND_API_URL || 'http://localhost:3001/api';
+const API_BASE_URL = import.meta.env.VITE_BACKEND_API_URL || 'https://build-your-dream-pc-backend.onrender.com/api';
 
 export interface FetchProductsParams {
   per_page?: number;
@@ -18,6 +18,7 @@ export interface FetchProductsParams {
   max_price?: number;
   orderby?: string;
   order?: 'asc' | 'desc';
+  useLive?: boolean; // If true, fetch directly from WooCommerce (bypassing database cache)
 }
 
 export interface FetchProductsResult {
@@ -58,14 +59,19 @@ export const fetchProducts = async (params: FetchProductsParams = {}): Promise<F
     if (params.orderby) queryParams.append('orderby', params.orderby);
     if (params.order) queryParams.append('order', params.order);
 
-    const url = `${API_BASE_URL}/products?${queryParams.toString()}`;
-    console.log(`🔵 Fetching products from backend: ${url}`);
+    // Determine URL based on useLive param
+    const url = params.useLive
+      ? `${API_BASE_URL}/woocommerce/products?${queryParams.toString()}`
+      : `${API_BASE_URL}/products?${queryParams.toString()}`;
+
+    console.log(`🔵 Fetching products from backend (${params.useLive ? 'LIVE' : 'DB'}): ${url}`);
     console.log(`📋 Request params:`, {
       category: params.category,
       page: params.page,
       per_page: params.per_page,
       search: params.search,
-      pc_component_category: params.pc_component_category
+      pc_component_category: params.pc_component_category,
+      useLive: params.useLive
     });
     
     // Add timeout and better error handling for SSL/network issues
@@ -101,14 +107,16 @@ export const fetchProducts = async (params: FetchProductsParams = {}): Promise<F
     const data = await response.json();
     
     // Transform backend products to WooCommerce format for compatibility
-    const transformedProducts = data.products.map((product: any) => transformBackendProductToWooCommerce(product));
+    // Note: If using useLive, data.products is already close to WooCommerce format, but we run it through
+    // transformation to ensure consistency (especially with snake_case fields)
+    const transformedProducts = (data.products || []).map((product: any) => transformBackendProductToWooCommerce(product));
 
-    console.log(`✅ Fetched ${transformedProducts.length} products from backend (Total: ${data.pagination?.total || transformedProducts.length})`);
+    console.log(`✅ Fetched ${transformedProducts.length} products from backend (Total: ${data.pagination?.total || data.total || transformedProducts.length})`);
 
     return {
       products: transformedProducts,
-      totalProducts: data.pagination?.total || data.products.length,
-      totalPages: data.pagination?.total_pages || 1,
+      totalProducts: data.pagination?.total || data.total || transformedProducts.length,
+      totalPages: data.pagination?.total_pages || data.totalPages || 1,
     };
   } catch (error) {
     console.error('❌ Error fetching products from backend:', error);

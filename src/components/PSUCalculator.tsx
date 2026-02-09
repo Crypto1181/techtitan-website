@@ -448,7 +448,10 @@ const PSUCalculator = () => {
             </div>
 
             <div className="space-y-3">
-              <Button className="w-full bg-accent hover:bg-accent/90 text-white">
+              <Button 
+                className="w-full bg-accent hover:bg-accent/90 text-white"
+                onClick={() => window.location.href = '/products?category=power-supply'}
+              >
                 <ShoppingCart className="h-4 w-4 mr-2" />
                 SHOP PSUs
               </Button>
