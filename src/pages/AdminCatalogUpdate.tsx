@@ -7,7 +7,9 @@ import MainHeader from '@/components/layout/MainHeader';
 import Footer from '@/components/layout/Footer';
 import { fetchSettings, updateSetting } from '@/services/expressBackend';
 import { toast } from '@/components/ui/use-toast';
-import { Save, Loader2 } from 'lucide-react';
+import { Save, Loader2, LayoutGrid, FileText } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { AdminCategoryManagerContent } from './AdminCategoryManager';
 
 const AdminCatalogUpdate = () => {
   const [currentUrl, setCurrentUrl] = useState('');
@@ -81,77 +83,110 @@ const AdminCatalogUpdate = () => {
         onTabChange={() => {}}
       />
       
-      <main className="flex-1 container py-12">
-        <div className="max-w-2xl mx-auto">
+      <main className="flex-1 container py-8">
+        <div className="max-w-5xl mx-auto">
             <h1 className="text-3xl font-bold mb-8">Admin Dashboard</h1>
             
-            <Card>
-                <CardHeader>
-                    <CardTitle>Product Catalog Settings</CardTitle>
-                    <CardDescription>
-                        Update the PDF file URL or link for the digital flipbook catalog displayed on the website.
-                    </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                    <div className="space-y-2">
-                        <Label htmlFor="current-url">Current Catalog URL</Label>
-                        <div className="p-3 bg-secondary/50 rounded-md text-sm font-mono break-all">
-                            {isFetching ? (
-                                <span className="flex items-center text-muted-foreground">
-                                    <Loader2 className="h-3 w-3 mr-2 animate-spin" />
-                                    Loading...
-                                </span>
-                            ) : (
-                                currentUrl || 'No URL set'
-                            )}
-                        </div>
-                    </div>
+            <Tabs defaultValue="catalog" className="w-full">
+              <TabsList className="grid w-full grid-cols-2 mb-8">
+                <TabsTrigger value="catalog" className="flex items-center gap-2">
+                  <FileText className="h-4 w-4" />
+                  Catalog Settings
+                </TabsTrigger>
+                <TabsTrigger value="categories" className="flex items-center gap-2">
+                  <LayoutGrid className="h-4 w-4" />
+                  Category Manager
+                </TabsTrigger>
+              </TabsList>
 
-                    <div className="space-y-2">
-                        <Label htmlFor="new-url">New Catalog URL or Filename</Label>
-                        <Input
-                            id="new-url"
-                            value={newUrl}
-                            onChange={(e) => setNewUrl(e.target.value)}
-                            placeholder="https://example.com/catalog.pdf OR catalog.pdf"
-                        />
-                        <p className="text-xs text-muted-foreground">
-                            Enter a full URL, or just the filename (e.g., 'catalog.pdf') if uploaded to the configured GitHub repository.
-                        </p>
-                    </div>
+              <TabsContent value="catalog">
+                <div className="max-w-2xl mx-auto">
+                  <Card>
+                      <CardHeader>
+                          <CardTitle>Product Catalog Settings</CardTitle>
+                          <CardDescription>
+                              Update the PDF file URL or link for the digital flipbook catalog displayed on the website.
+                          </CardDescription>
+                      </CardHeader>
+                      <CardContent className="space-y-6">
+                          <div className="space-y-2">
+                              <Label htmlFor="current-url">Current Catalog URL</Label>
+                              <div className="p-3 bg-secondary/50 rounded-md text-sm font-mono break-all">
+                                  {isFetching ? (
+                                      <span className="flex items-center text-muted-foreground">
+                                          <Loader2 className="h-3 w-3 mr-2 animate-spin" />
+                                          Loading...
+                                      </span>
+                                  ) : (
+                                      currentUrl || 'No URL set'
+                                  )}
+                              </div>
+                          </div>
 
-                    <div className="space-y-2">
-                        <Label htmlFor="new-subtitle">Catalog Subtitle</Label>
-                        <Input
-                            id="new-subtitle"
-                            value={newSubtitle}
-                            onChange={(e) => setNewSubtitle(e.target.value)}
-                            placeholder="e.g. Peripherals - October 2025"
-                        />
-                        <p className="text-xs text-muted-foreground">
-                           Optional subtitle to display below the main title.
-                        </p>
-                    </div>
+                          <div className="space-y-2">
+                              <Label htmlFor="new-url">New Catalog URL or Filename</Label>
+                              <Input
+                                  id="new-url"
+                                  value={newUrl}
+                                  onChange={(e) => setNewUrl(e.target.value)}
+                                  placeholder="https://example.com/catalog.pdf OR catalog.pdf"
+                              />
+                              <p className="text-xs text-muted-foreground">
+                                  Enter a full URL, or just the filename (e.g., 'catalog.pdf') if uploaded to the configured GitHub repository.
+                              </p>
+                          </div>
 
-                    <Button 
-                        onClick={handleSaveUrl} 
-                        disabled={isLoading || isFetching || !hasChanges}
-                        className="w-full sm:w-auto"
-                    >
-                        {isLoading ? (
-                            <>
-                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                Saving...
-                            </>
-                        ) : (
-                            <>
-                                <Save className="mr-2 h-4 w-4" />
-                                Update Catalog
-                            </>
-                        )}
-                    </Button>
-                </CardContent>
-            </Card>
+                          <div className="space-y-2">
+                              <Label htmlFor="new-subtitle">Catalog Subtitle</Label>
+                              <Input
+                                  id="new-subtitle"
+                                  value={newSubtitle}
+                                  onChange={(e) => setNewSubtitle(e.target.value)}
+                                  placeholder="e.g. Peripherals - October 2025"
+                              />
+                              <p className="text-xs text-muted-foreground">
+                                Optional subtitle to display below the main title.
+                              </p>
+                          </div>
+
+                          <Button 
+                              onClick={handleSaveUrl} 
+                              disabled={isLoading || isFetching || !hasChanges}
+                              className="w-full sm:w-auto"
+                          >
+                              {isLoading ? (
+                                  <>
+                                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                      Saving...
+                                  </>
+                              ) : (
+                                  <>
+                                      <Save className="mr-2 h-4 w-4" />
+                                      Update Catalog
+                                  </>
+                              )}
+                          </Button>
+                      </CardContent>
+                  </Card>
+                </div>
+              </TabsContent>
+
+              <TabsContent value="categories">
+                <div className="max-w-3xl mx-auto">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Manage Categories</CardTitle>
+                      <CardDescription>
+                        Reorder categories by dragging and dropping. Changes are saved automatically or manually depending on the implementation.
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <AdminCategoryManagerContent />
+                    </CardContent>
+                  </Card>
+                </div>
+              </TabsContent>
+            </Tabs>
         </div>
       </main>
 
