@@ -23,6 +23,7 @@ import FAQ from "./pages/FAQ";
 import ShippingInfo from "./pages/ShippingInfo";
 import ProductCatalog from "./pages/ProductCatalog";
 import AdminCatalogUpdate from "./pages/AdminCatalogUpdate";
+import AdminCategoryManager from "./pages/AdminCategoryManager";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -72,6 +73,7 @@ const App = () => (
                 
                 {/* Admin Routes - Ideally should be protected */}
                 <Route path="/admin/catalog-update" element={<AdminCatalogUpdate />} />
+                <Route path="/admin/categories" element={<AdminCategoryManager />} />
 
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />

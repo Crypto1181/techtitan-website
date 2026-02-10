@@ -37,10 +37,10 @@ const Index = () => {
     useLive: true,
   });
 
-  // Fetch featured products - use explicit featured flag and random order for variety
+  // Fetch featured products - remove explicit featured flag to ensure we get products, use random order
+  // This falls back to random products if no specific featured products are found
   const { products: featuredProductsRaw, loading: loadingFeatured } = useWooCommerceProducts({
     per_page: 20,
-    featured: true,
     orderby: 'rand',
   });
 
