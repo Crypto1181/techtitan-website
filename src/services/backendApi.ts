@@ -344,3 +344,57 @@ function transformBackendProductToWooCommerce(product: any): any {
     _pc_component_category: product.pc_component_category,
   };
 }
+
+/**
+ * Generic API wrapper for direct backend calls
+ * Mimics axios interface for compatibility
+ */
+export const backendApi = {
+  get: async (endpoint: string) => {
+    // Ensure endpoint starts with / if not present
+    const path = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+    const response = await fetch(`${API_BASE_URL}${path}`);
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.message || `API Error: ${response.status} ${response.statusText}`);
+    }
+    return { data: await response.json() };
+  },
+  post: async (endpoint: string, data: any) => {
+    const path = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+    const response = await fetch(`${API_BASE_URL}${path}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.message || `API Error: ${response.status} ${response.statusText}`);
+    }
+    return { data: await response.json() };
+  },
+  put: async (endpoint: string, data: any) => {
+    const path = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+    const response = await fetch(`${API_BASE_URL}${path}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.message || `API Error: ${response.status} ${response.statusText}`);
+    }
+    return { data: await response.json() };
+  },
+  delete: async (endpoint: string) => {
+    const path = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+    const response = await fetch(`${API_BASE_URL}${path}`, {
+      method: 'DELETE',
+    });
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.message || `API Error: ${response.status} ${response.statusText}`);
+    }
+    return { data: await response.json() };
+  }
+};

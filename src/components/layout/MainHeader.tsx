@@ -424,6 +424,32 @@ const MainHeader = ({ onMenuClick, activeTab, onTabChange }: MainHeaderProps) =>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem 
+                      onClick={() => navigate('/admin/categories')}
+                      className="cursor-pointer font-semibold text-primary"
+                    >
+                      Admin: Categories
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      onClick={() => navigate('/admin/catalog-update')}
+                      className="cursor-pointer font-semibold text-primary"
+                    >
+                      Admin: Catalog Update
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem  
+                      onClick={() => navigate('/admin/categories')}
+                      className="cursor-pointer font-semibold text-primary"
+                    >
+                      Admin: Categories
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      onClick={() => navigate('/admin/catalog-update')}
+                      className="cursor-pointer font-semibold text-primary"
+                    >
+                      Admin: Catalog Update
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem 
                       onClick={handleSignOut}
                       className="cursor-pointer text-destructive"
                     >
@@ -494,6 +520,19 @@ const MainHeader = ({ onMenuClick, activeTab, onTabChange }: MainHeaderProps) =>
                       className="cursor-pointer"
                     >
                       Account Settings
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem 
+                      onClick={() => navigate('/admin/categories')}
+                      className="cursor-pointer font-semibold text-primary"
+                    >
+                      Admin: Categories
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      onClick={() => navigate('/admin/catalog-update')}
+                      className="cursor-pointer font-semibold text-primary"
+                    >
+                      Admin: Catalog Update
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem 
