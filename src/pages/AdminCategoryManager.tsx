@@ -50,7 +50,7 @@ const SortableItem = ({ category, onViewChildren }: { category: Category; onView
   );
 };
 
-const AdminCategoryManager = () => {
+export const AdminCategoryManagerContent = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPath, setCurrentPath] = useState<Category[]>([]);
@@ -136,14 +136,6 @@ const AdminCategoryManager = () => {
           updateChildren(newCategories);
           return newCategories;
         });
-
-        // Also update current path references to reflect changes in UI immediately
-        // (Actually, getCurrentLevelCategories derives from state, but we need to ensure currentPath objects are up to date if we rely on them. 
-        // In this implementation, getCurrentLevelCategories looks up from 'categories' state if we reconstructed the path, 
-        // OR we can just update the specific parent in currentPath. 
-        // A simpler way: update the 'categories' state, and 'getCurrentLevelCategories' needs to be smart.
-        // Wait, 'currentPath' holds references to the old objects. 
-        // We should re-derive the current level list from the fresh 'categories' state.)
       }
     }
   };
@@ -164,11 +156,6 @@ const AdminCategoryManager = () => {
 
   const handleSaveOrder = async () => {
     try {
-      // We need to send ALL categories with their new order index
-      // Flatten the tree or just send the modified level?
-      // The backend expects a flat list of { id, display_order }.
-      // We should calculate display_order for ALL items in the current level (0-based index).
-      
       const updates: { id: number; display_order: number }[] = [];
       
       const processLevel = (list: Category[]) => {
@@ -202,81 +189,89 @@ const AdminCategoryManager = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
-      <MainHeader />
-      
-      <main className="flex-grow container mx-auto px-4 py-8">
-        <div className="max-w-4xl mx-auto">
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Category Manager</h1>
-              <p className="text-gray-500 mt-1">Drag and drop to rearrange categories</p>
-            </div>
-            
-            {hasChanges && (
-              <Button onClick={handleSaveOrder} className="bg-green-600 hover:bg-green-700">
-                <Save className="mr-2 h-4 w-4" /> Save Changes
-              </Button>
-            )}
+    <div className="container mx-auto px-4 py-8">
+      <div className="max-w-4xl mx-auto">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">Category Manager</h1>
+            <p className="text-gray-500 mt-1">Drag and drop to rearrange categories</p>
           </div>
-
-          {/* Breadcrumbs */}
-          <div className="flex items-center gap-2 mb-4 text-sm text-gray-600">
-            <button 
-              onClick={() => handleNavigateUp(-1)}
-              className={`hover:text-primary ${currentPath.length === 0 ? 'font-bold text-gray-900' : ''}`}
-            >
-              All Categories
-            </button>
-            {currentPath.map((cat, index) => (
-              <div key={cat.id} className="flex items-center gap-2">
-                <ChevronRight className="h-4 w-4" />
-                <button 
-                  onClick={() => handleNavigateUp(index)}
-                  className={`hover:text-primary ${index === currentPath.length - 1 ? 'font-bold text-gray-900' : ''}`}
-                >
-                  {cat.name}
-                </button>
-              </div>
-            ))}
-          </div>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>
-                {currentPath.length === 0 ? 'Root Categories' : currentPath[currentPath.length - 1].name}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              {loading ? (
-                <div className="text-center py-8">Loading...</div>
-              ) : visibleCategories.length === 0 ? (
-                <div className="text-center py-8 text-gray-500">No categories found in this level.</div>
-              ) : (
-                <DndContext 
-                  sensors={sensors} 
-                  collisionDetection={closestCenter} 
-                  onDragEnd={handleDragEnd}
-                >
-                  <SortableContext 
-                    items={visibleCategories.map(c => c.id)} 
-                    strategy={verticalListSortingStrategy}
-                  >
-                    <div className="space-y-2">
-                      {visibleCategories.map((category) => (
-                        <SortableItem 
-                          key={category.id} 
-                          category={category} 
-                          onViewChildren={category.children && category.children.length > 0 ? handleNavigateDown : undefined}
-                        />
-                      ))}
-                    </div>
-                  </SortableContext>
-                </DndContext>
-              )}
-            </CardContent>
-          </Card>
+          
+          {hasChanges && (
+            <Button onClick={handleSaveOrder} className="bg-green-600 hover:bg-green-700">
+              <Save className="mr-2 h-4 w-4" /> Save Changes
+            </Button>
+          )}
         </div>
+
+        {/* Breadcrumbs */}
+        <div className="flex items-center gap-2 mb-4 text-sm text-gray-600">
+          <button 
+            onClick={() => handleNavigateUp(-1)}
+            className={`hover:text-primary ${currentPath.length === 0 ? 'font-bold text-gray-900' : ''}`}
+          >
+            All Categories
+          </button>
+          {currentPath.map((cat, index) => (
+            <div key={cat.id} className="flex items-center gap-2">
+              <ChevronRight className="h-4 w-4" />
+              <button 
+                onClick={() => handleNavigateUp(index)}
+                className={`hover:text-primary ${index === currentPath.length - 1 ? 'font-bold text-gray-900' : ''}`}
+              >
+                {cat.name}
+              </button>
+            </div>
+          ))}
+        </div>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>
+              {currentPath.length === 0 ? 'Root Categories' : currentPath[currentPath.length - 1].name}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {loading ? (
+              <div className="text-center py-8">Loading...</div>
+            ) : visibleCategories.length === 0 ? (
+              <div className="text-center py-8 text-gray-500">No categories found in this level.</div>
+            ) : (
+              <DndContext 
+                sensors={sensors} 
+                collisionDetection={closestCenter} 
+                onDragEnd={handleDragEnd}
+              >
+                <SortableContext 
+                  items={visibleCategories.map(c => c.id)} 
+                  strategy={verticalListSortingStrategy}
+                >
+                  <div className="space-y-2">
+                    {visibleCategories.map((category) => (
+                      <SortableItem 
+                        key={category.id} 
+                        category={category} 
+                        onViewChildren={category.children && category.children.length > 0 ? handleNavigateDown : undefined}
+                      />
+                    ))}
+                  </div>
+                </SortableContext>
+              </DndContext>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+};
+
+const AdminCategoryManager = () => {
+  return (
+    <div className="min-h-screen flex flex-col bg-gray-50">
+      <MainHeader onMenuClick={() => {}} activeTab="admin" onTabChange={() => {}} />
+      
+      <main className="flex-grow">
+        <AdminCategoryManagerContent />
       </main>
 
       <Footer />
