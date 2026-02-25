@@ -2,7 +2,7 @@ import axios from 'axios';
 import type { WooCommerceProduct } from '@/types/woocommerce';
 
 // Get API base URL from environment or use default
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://build-your-dream-pc-backend.onrender.com/api';
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://build-your-dream-pc-backend-production.up.railway.app/api';
 
 export interface FetchProductsParams {
     per_page?: number;
