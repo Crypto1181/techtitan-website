@@ -5,7 +5,7 @@
 
 // Backend API base URL - defaults to localhost:3001
 // Set VITE_BACKEND_API_URL in .env file to override
-const API_BASE_URL = import.meta.env.VITE_BACKEND_API_URL || 'https://build-your-dream-pc-backend.onrender.com/api';
+const API_BASE_URL = import.meta.env.VITE_BACKEND_API_URL || 'https://build-your-dream-pc-backend-production.up.railway.app/api';
 
 export interface FetchProductsParams {
   per_page?: number;
@@ -39,13 +39,13 @@ export interface FetchProductsResult {
 export const fetchProducts = async (params: FetchProductsParams = {}): Promise<FetchProductsResult> => {
   try {
     const queryParams = new URLSearchParams();
-    
+
     if (params.page) queryParams.append('page', params.page.toString());
     if (params.per_page) queryParams.append('per_page', params.per_page.toString());
     if (params.category) {
       // Handle both single number and array
-      const categoryValue = Array.isArray(params.category) 
-        ? params.category[0]?.toString() || '' 
+      const categoryValue = Array.isArray(params.category)
+        ? params.category[0]?.toString() || ''
         : params.category.toString();
       if (categoryValue) {
         queryParams.append('category', categoryValue);
@@ -59,12 +59,14 @@ export const fetchProducts = async (params: FetchProductsParams = {}): Promise<F
     if (params.orderby) queryParams.append('orderby', params.orderby);
     if (params.order) queryParams.append('order', params.order);
 
+    const useLive = !!params.useLive;
+
     // Determine URL based on useLive param
-    const url = params.useLive
+    const url = useLive
       ? `${API_BASE_URL}/woocommerce/products?${queryParams.toString()}`
       : `${API_BASE_URL}/products?${queryParams.toString()}`;
 
-    console.log(`🔵 Fetching products from backend (${params.useLive ? 'LIVE' : 'DB'}): ${url}`);
+    console.log(`🔵 Fetching products from backend (${useLive ? 'LIVE' : 'DB'}): ${url}`);
     console.log(`📋 Request params:`, {
       category: params.category,
       page: params.page,
@@ -73,31 +75,52 @@ export const fetchProducts = async (params: FetchProductsParams = {}): Promise<F
       pc_component_category: params.pc_component_category,
       useLive: params.useLive
     });
-    
-    // Add timeout and better error handling for SSL/network issues
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
-    
-    let response;
-    try {
-      response = await fetch(url, {
-        signal: controller.signal,
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-      });
-      clearTimeout(timeoutId);
-    } catch (fetchError: any) {
-      clearTimeout(timeoutId);
-      // Handle SSL errors specifically
-      if (fetchError.name === 'AbortError') {
-        throw new Error('Request timeout - backend took too long to respond');
-      } else if (fetchError.message?.includes('SSL') || fetchError.message?.includes('ERR_SSL')) {
-        console.error('❌ SSL connection error - backend may be restarting or having certificate issues');
-        throw new Error('SSL connection error - please try again in a few moments. The backend may be restarting.');
+
+    // Helper to perform fetch with timeout and consistent error handling
+    const doFetch = async (targetUrl: string): Promise<Response> => {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000);
+      try {
+        const resp = await fetch(targetUrl, {
+          signal: controller.signal,
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+        });
+        clearTimeout(timeoutId);
+        return resp;
+      } catch (fetchError: any) {
+        clearTimeout(timeoutId);
+        if (fetchError.name === 'AbortError') {
+          throw new Error('Request timeout - backend took too long to respond');
+        } else if (fetchError.message?.includes('SSL') || fetchError.message?.includes('ERR_SSL')) {
+          console.error('❌ SSL connection error - backend may be restarting or having certificate issues');
+          throw new Error('SSL connection error - please try again in a few moments. The backend may be restarting.');
+        }
+        throw fetchError;
       }
-      throw fetchError;
+    };
+
+    let response: Response;
+    try {
+      response = await doFetch(url);
+    } catch (fetchError: any) {
+      // If live endpoint fails entirely (network error, timeout, etc.), fall back to DB
+      if (useLive) {
+        console.warn(`⚠️ Live WooCommerce endpoint failed: ${fetchError.message}. Falling back to database products.`);
+        const fallbackUrl = `${API_BASE_URL}/products?${queryParams.toString()}`;
+        response = await doFetch(fallbackUrl);
+      } else {
+        throw fetchError;
+      }
+    }
+
+    // If live WooCommerce endpoint returns a server error (500, 502, 503, 504), fall back to DB-backed products
+    if (!response.ok && useLive && response.status >= 500) {
+      console.warn(`⚠️ Live WooCommerce endpoint returned ${response.status}. Falling back to database products endpoint.`);
+      const fallbackUrl = `${API_BASE_URL}/products?${queryParams.toString()}`;
+      response = await doFetch(fallbackUrl);
     }
 
     if (!response.ok) {
@@ -105,7 +128,7 @@ export const fetchProducts = async (params: FetchProductsParams = {}): Promise<F
     }
 
     const data = await response.json();
-    
+
     // Transform backend products to WooCommerce format for compatibility
     // Note: If using useLive, data.products is already close to WooCommerce format, but we run it through
     // transformation to ensure consistency (especially with snake_case fields)
@@ -145,7 +168,7 @@ export const fetchAllProducts = async (params: Omit<FetchProductsParams, 'page'>
         hasMore = false;
       } else {
         allProducts.push(...result.products);
-        
+
         // Check if we've reached the end
         if (result.totalPages && page >= result.totalPages) {
           hasMore = false;
@@ -196,10 +219,10 @@ export const fetchProductById = async (id: number): Promise<any> => {
 export const fetchCategories = async (all: boolean = true): Promise<any[]> => {
   try {
     console.log(`🔵 Fetching ${all ? 'all' : 'root'} categories from backend`);
-    const url = all 
+    const url = all
       ? `${API_BASE_URL}/categories?all=true`
       : `${API_BASE_URL}/categories`;
-    
+
     const response = await fetch(url);
 
     if (!response.ok) {
@@ -207,7 +230,7 @@ export const fetchCategories = async (all: boolean = true): Promise<any[]> => {
     }
 
     const categories = await response.json();
-    
+
     // Transform backend categories to WooCommerce format
     const transformed = categories.map((cat: any) => ({
       id: cat.woo_commerce_id || cat.id,
@@ -219,7 +242,7 @@ export const fetchCategories = async (all: boolean = true): Promise<any[]> => {
       // Keep internal database ID for reference
       _internalId: cat.id,
     }));
-    
+
     console.log(`✅ Fetched ${transformed.length} categories from backend (${all ? 'all' : 'root only'})`);
     return transformed;
   } catch (error) {
@@ -241,7 +264,7 @@ export const fetchCategoryTree = async (): Promise<any[]> => {
     }
 
     const categoryTree = await response.json();
-    
+
     // Transform backend category tree to frontend format
     const transformCategory = (cat: any): any => ({
       id: cat.woo_commerce_id || cat.id,
@@ -253,9 +276,9 @@ export const fetchCategoryTree = async (): Promise<any[]> => {
       image_url: cat.image_url,
       children: cat.children ? cat.children.map(transformCategory) : [],
     });
-    
+
     const transformed = categoryTree.map(transformCategory);
-    
+
     console.log(`✅ Fetched category tree with ${transformed.length} root categories from backend`);
     return transformed;
   } catch (error) {
